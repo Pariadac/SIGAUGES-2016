@@ -1,9 +1,0 @@
-create table auximg(
-
-	auxid serial,
-	description_img varchar(200),
-	orgpage_img varchar(200),
-	idmues int
-	
-
-);

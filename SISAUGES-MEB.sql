@@ -3,12 +3,12 @@
 -- DROP DATABASE "SISAUGES-MEB";
 
 --CREATE DATABASE "SISAUGES-MEB"
-  --WITH OWNER = postgres
-       --ENCODING = 'UTF8'
-       --TABLESPACE = pg_default
-       --LC_COLLATE = 'Spanish_Venezuela.1252'
-       --LC_CTYPE = 'Spanish_Venezuela.1252'
-       --CONNECTION LIMIT = -1;
+  --WITH ENCODING='UTF8'
+    --   OWNER=postgres
+    --   LC_COLLATE='es_VE.UTF-8'
+    --   LC_CTYPE='es_VE.UTF-8'
+    --   CONNECTION LIMIT=-1
+    --   TABLESPACE=pg_default;
 
 CREATE TABLE IF NOT EXISTS PERSONA
 (
@@ -27,45 +27,43 @@ CREATE TABLE IF NOT EXISTS PERSONA
 --drop table persona;
 
 
---CREATE TYPE STATUS AS ENUM 
---(
---	'No iniciado',
---	'Iniciado',
---	'En progreso',
---	'Culminado'
---);
-
---CREATE TYPE PERMISOS AS ENUM
---(	'Publico',
---	'Privado',
---	'Mixto'
---);
-
-CREATE TABLE IF NOT EXISTS SECTOR_ACTIVIDAD
+CREATE TYPE STATUS AS ENUM 
 (
-	id_sector_ac serial,
+	'No iniciado',
+	'En progreso',
+	'Culminado'
+);
+
+CREATE TYPE PERMISOS AS ENUM
+(	'Publico',
+	'Privado'
+);
+
+CREATE TABLE IF NOT EXISTS SECTOR_PROYECTO
+(
+	id_sector_pr serial,
 	descripcion_sector varchar(20),
-	constraint pk_setor_actividad
-		primary key (id_sector_ac)
+	constraint pk_setor_proyecto
+		primary key (id_sector_pr)
 );
 
---drop table sector_actividad;
+--drop table sector_proyecto;
 
 
-CREATE TABLE IF NOT EXISTS ACTIVIDAD
+CREATE TABLE IF NOT EXISTS PROYECTO
 (
-	id_actividad serial,
-	nombre_actividad varchar(30) not null,
-	status_actividad STATUS not null,
-	permiso_actividad PERMISOS not null,
-	id_sector_ac integer,
-	constraint pk_actividad
-		primary key (id_actividad),
-	constraint fk_sector_actividad
-		foreign key (id_sector_ac) references sector_actividad(id_sector_ac)
+	id_proyecto serial,
+	nombre_proyecto varchar(30) not null,
+	status_proyecto STATUS not null,
+	permiso_proyecto PERMISOS not null,
+	id_sector_pr integer,
+	constraint pk_proyecto
+		primary key (id_proyecto),
+	constraint fk_sector_proyecto
+		foreign key (id_sector_pr) references sector_proyecto(id_sector_pr)
 );
 
---drop table actividad;
+--drop table proyecto;
 
 
 
@@ -74,38 +72,17 @@ CREATE TABLE IF NOT EXISTS TESISTA
 	id_tesista serial,
 	carrera_tesista varchar(25),
 	semestre_tesista varchar (5),
-	id_actividad integer,
+	id_proyecto integer,
+	id_persona int,
 	constraint pk_tesista
 		primary key (id_tesista),
-	constraint fk_actividad_tesista
-		foreign key (id_actividad) references actividad(id_actividad)
-)INHERITS(PERSONA);
-
---drop table tesista
-
-CREATE TABLE IF NOT EXISTS REPRESENTANTE
-(
-	id_representante serial,
-	constraint pk_representante 
-		primary key (id_representante)
-)INHERITS(PERSONA);
-	
---drop table representante;
-
-CREATE TABLE IF NOT EXISTS REPRESENTANTE_ACTIVIDAD
-(
-	id_actividad integer,
-	id_representante integer,
-	constraint pk_ra
-		primary key (id_actividad, id_representante),
-	constraint fk_ar
-		foreign key (id_actividad) references actividad(id_actividad),
-	constraint fk_ra
-		foreign key (id_representante) references representante(id_representante)
-	
+	constraint fk_proyecto_tesista
+		foreign key (id_proyecto) references proyecto(id_proyecto),
+	constraint fk_persona_tesista
+		foreign key (id_persona) references persona(id_persona)
 );
 
---drop table representante_actividad
+--drop table tesista
 
 CREATE TABLE IF NOT EXISTS INSTITUCION
 (
@@ -114,11 +91,25 @@ CREATE TABLE IF NOT EXISTS INSTITUCION
 	direccion_institucion varchar(100),
 	correo_institucional varchar(30) not null,
 	telefono_institucion varchar(12),
-	constraint pk_institicion
+	constraint pk_institucion
 		primary key (id_institucion)
 );
 
 --drop table institucion;
+
+CREATE TABLE IF NOT EXISTS INSTITUCION_PROYECTO
+(
+	id_institucion integer,
+	id_proyecto integer,
+	constraint pk_IP
+		primary key (id_institucion, id_proyecto),
+	constraint fk_institucion
+		foreign key (id_institucion) references institucion (id_institucion),
+	constraint fk_proyecto
+		foreign key (id_proyecto) references proyecto (id_proyecto)
+);
+
+--drop table institucion_proyecto;
 
 CREATE TABLE IF NOT EXISTS DEPARTAMENTO
 (
@@ -130,30 +121,32 @@ CREATE TABLE IF NOT EXISTS DEPARTAMENTO
 
 --DROP TABLE DEPARTAMENTO;
 
-CREATE TABLE IF NOT EXISTS INSTITUCION_DEPARTAMENTO_REPRESENTANTE
+CREATE TABLE IF NOT EXISTS REPRESENTANTE
 (
-	id_institucion integer,
-	id_departamento integer,
-	id_representante integer,
-	constraint pk_IDR
-		primary key (id_departamento, id_institucion, id_representante),
+	id_representante serial,
+	id_institucion int,
+	id_departamento int,
+	id_persona int,
+	constraint pk_representante 
+		primary key (id_representante),
 	constraint fk_institucion
 		foreign key (id_institucion) references institucion (id_institucion),
 	constraint fk_departamento
 		foreign key (id_departamento) references departamento (id_departamento),
-	constraint fk_representante
-		foreign key (id_representante) references representante (id_representante)
+	constraint fk_persona_representante
+		foreign key (id_persona) references persona(id_persona)
+
 );
+	
+--drop table representante;
 
---DROP TABLE INSTITUCION_DEPARTAMENTO_REPRESENTANTE;
 
-
-CREATE TABLE IF NOT EXISTS NIVEL_DE_USUARIO
+CREATE TABLE IF NOT EXISTS ROL_USUARIO
 (
-	id_nivel_de_usuario serial,
-	descripcion_nivel_usuario varchar(15),
-	constraint pk_nivel_de_usuario 
-		primary key (id_nivel_de_usuario)
+	id_rol serial,
+	descripcion_rol varchar(30),
+	constraint pk_rol_de_usuario 
+		primary key (id_rol)
 );
 
 --drop table nivel_de_usuario;
@@ -164,22 +157,19 @@ CREATE TABLE IF NOT EXISTS USUARIO
 	username varchar(20),
 	password varchar(60),
 	id_nivel_de_usuario integer,
+	id_rol int,
+	id_persona int,
 	remember_token varchar(100),
 	constraint pk_usuario
-		primary key (id_usuario)
-)INHERITS(PERSONA);
+		primary key (id_usuario),
+	constraint fk_rol_usuario
+		foreign key (id_rol) references ROL_USUARIO (id_rol),
+	constraint fk_persona_tesista
+		foreign key (id_persona) references persona(id_persona)
+);
 
 --drop table usuario;
 
-CREATE TABLE IF NOT EXISTS USUARIOS_NIVELES
-(
-	id_usuario integer,
-	id_nivel_de_usuario integer,
-	FOREIGN KEY (id_nivel_de_usuario) references nivel_de_usuario (id_nivel_de_usuario),
-	FOREIGN KEY (id_usuario) references usuario (id_usuario)
-);
-
---drop table usuarios_niveles;
 
 CREATE TABLE IF NOT EXISTS MUESTRA
 (
@@ -220,21 +210,21 @@ CREATE TABLE IF NOT EXISTS MUESTRA_TECNICA_ESTUDIO
 
 --drop table muestra_tecnica_estudio
 
-CREATE TABLE IF NOT EXISTS MUESTRA_ACTIVIDAD
+CREATE TABLE IF NOT EXISTS MUESTRA_PROYECTO
 (
 
-	id_actividad integer,
+	id_proyecto integer,
 	id_muestra integer,
 	ruta_muestra varchar(60),
-	constraint pk_actividad_muestra 
-		primary key (id_actividad,id_muestra),
-	constraint fk_actividad
-		foreign key (id_actividad) references actividad(id_actividad),
+	constraint pk_proyecto_muestra 
+		primary key (id_proyecto,id_muestra),
+	constraint fk_proyecto
+		foreign key (id_proyecto) references proyecto(id_proyecto),
 	constraint fk_muestra
 		foreign key (id_muestra) references muestra (id_muestra)
 );
 
---drop table muestra_actividad;
+--drop table muestra_proyecto;
 
 CREATE TABLE IF NOT EXISTS LABORATORIO
 (
@@ -267,3 +257,15 @@ CREATE TABLE IF NOT EXISTS MUESTRA_LABORATORIO
 
 --insert into representante(cedula, nombre, apellido, correo_electronico, telefono) values(18491779,'ely','colmenarez','elyjcolmenarez@gmail.com','02124430191');
 --select * from persona
+
+
+CREATE TABLE IF NOT EXISTS AUXIMG
+(
+
+	auxid serial,
+	description_img varchar(200),
+	orgpage_img varchar(200),
+	idmues int
+	
+
+);
