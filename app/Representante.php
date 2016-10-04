@@ -14,27 +14,9 @@ class Representante extends Model
 
     public function institucion()
     {
-        return $this->belongsToMany(Institucion::class, 'institucion_departamento_representante',
-                                                        'id_representante',
-                                                        'id_institucion')
-                                    ->withPivot('id_departamento');
+        return $this->belongsTo(Departamento::class,
+                                'id_institucion',
+                                'id_representante');
 
-    }
-
-    public function departamento()
-    {
-        return $this->belongsToMany(Departamento::class,
-                                    'institucion_departamento_representante',
-                                    'id_representante',
-                                    'id_departamento')
-                                    ->withPivot('id_institucion');
-    }
-
-    public function actividades()
-    {
-        return $this->belongsToMany(Actividad::class,
-                                     'representante_actividad',
-                                     'id_representante',
-                                     'id_actividad');
     }
 }

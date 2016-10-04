@@ -12,20 +12,19 @@ class Institucion extends Model
     protected $fillable = ['nombre_institucion','direccion_institucion','telefono_institucion'];
     protected $guarded = ['id_institucion'];
 
-    public function departamento()
+    public function proyecto()
     {
-        return $this->belongsToMany(Departamento::class,
-                                    'institucion_departamento_representante',
-                                    'id_departamento',
+        return $this->belongsToMany(Proyecto::class,
+                                    'institucion_proyecto',
+                                    'id_proyecto',
                                     'id_institucion');
     }
 
     public function representante()
     {
-        return $this->belongsToMany(Representante::class,
-                                    'institucion_departamento_representante',
-                                    'id_representante',
-                                    'id_institucion');
+        return $this->belongsTo(  Representante::class,
+                                'id_representante',
+                                'id_institucion');
     }
 }
 ?>

@@ -13,19 +13,14 @@ class Departamento extends Model
     protected $fillable = ['descripcion_departamento'];
     protected $guarded = ['id_departamento'];
 
-    public function institucion()
-    {
-        return $this->belongsToMany(Institucion::class,
-                                    'institucion_departamento_representante',
-                                    'id_institucion',
-                                    'id_departamento');
-    }
 
     public function representante()
     {
-        return $this->belongsToMany(Representante::class,
-                                    'institucion_departamento_representante',
-                                    'id_representante',
-                                    'id_departamento');
+        return $this->hasMany(Representante::class,'id_representante','id_departamento');
+    }
+
+    public function institucion()
+    {
+        return $this->hasMany(Institucion::class,'id_institucion','id_departamento');
     }
 }

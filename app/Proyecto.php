@@ -4,17 +4,17 @@ namespace SISAUGES;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Actividad extends Model
+class Proyecto extends Model
 {
     public $timestamps = false;
-    protected $table = "actividad";
-    protected $primaryKey = "id_actividad";
-    protected $fillable = ['nombre_Actividad','status_actividad','permiso_actividad','id_sector_ac'];
-    protected $guarded = ['id_actividad'];
+    protected $table = "Proyecto";
+    protected $primaryKey = "id_proyecto";
+    protected $fillable = ['nombre_proyecto','status_proyecto','permiso_proyecto','id_sector_pr'];
+    protected $guarded = ['id_proyecto'];
 
-    public function representantes()
+    public function institucion()
     {
-        return $this->belongsToMany(Representante::class,'representante_actividad','id_actividad','id_representante');
+        return $this->belongsToMany(Institucion::class,'institucion_proyecto','id_proyecto','id_institucion');
     }
 
     public function tesistas()

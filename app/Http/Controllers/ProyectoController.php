@@ -25,7 +25,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
-use SISAUGES\Actividad;
+use SISAUGES\Proyecto;
 use SISAUGES\Http\Requests;
 use SISAUGES\Http\Controllers\Controller;
 use SISAUGES\Institucion;
@@ -42,16 +42,16 @@ use SISAUGES\SectorActividad;
  * @copyright 2016 Ely Colmenarez
  * @package SISAUGES\Http\Controllers
  */
-class ActividadController extends Controller
+class ProyectoController extends Controller
 {
     protected $sector;
-    protected $representante;
+    protected $institucion;
 
     public function __construct()
     {
         $this->middleware('auth');
         $this->sector           =   SectorActividad::all()->pluck('descripcion_sector','id_sector_ac');
-        $this->representante    =   Representante::all()->pluck('nombre','id_representante');
+        $this->institucion    =   Institucion::all()->pluck('institucion','id_institucion');
     }
     /**
      * Metodo diseñado para direccionar a la pantalla principal del modulo
@@ -67,7 +67,7 @@ class ActividadController extends Controller
     public function index(/*Request $request*/)
     {
         //$nombreActividad=$request->input('nombreActividad');
-        $actividad = Actividad::with('sector')->orderBy('id_actividad','asc')->paginate(5);
+        $actividad = Proyecto::with('sector')->orderBy('id_actividad','asc')->paginate(5);
         $actividad->setPath('actividad');
         return view('actividad.index')->with('actividad',$actividad);
     }
@@ -85,7 +85,7 @@ class ActividadController extends Controller
     public function create()
     {
         return view('actividad.crear')->with(['sectorActividad' =>  $this->sector,
-                                              'representante'   =>  $this->representante]);
+                                              'institucion'   =>  $this->institucion]);
     }
     /**
      * Metodo diseñado para almacenar la actividad en la base de datos
@@ -96,7 +96,7 @@ class ActividadController extends Controller
      */
     public function store()
     {
-        $actividad = new Actividad();
+        $actividad = new Proyecto();
         $actividad->nombre_actividad    = \Request::Input('nombreActividad');
         $actividad->status_actividad    = \Request::Input('statusActividad');
         $actividad->permiso_actividad   = \Request::Input('permisoActividad');
@@ -107,7 +107,7 @@ class ActividadController extends Controller
 
         foreach($representante as $rep)
         {
-            $actividad->representantes()->attach($rep);
+            $actividad->institucion()->attach($rep);
         }
 
 
@@ -126,13 +126,13 @@ class ActividadController extends Controller
      */
     public function edit($id)
     {
-        $actividad = Actividad::find($id);
-        $representanteSeleccionado = Actividad::find($id)->representantes()
-                                    ->pluck('representante_actividad.id_representante')
+        $actividad = Proyecto::find($id);
+        $representanteSeleccionado = Proyecto::find($id)->institucion()
+                                    ->pluck('institucion_proyecto.id_institucion')
                                     ->toArray();
         return view('actividad.editar')->with([ 'actividad'                 =>  $actividad,
                                                 'sectorActividad'           =>  $this->sector,
-                                                'representante'             =>  $this->representante,
+                                                'institucion'               =>  $this->institucion,
                                                 'representanteSeleccionado' =>  $representanteSeleccionado
                                                 ]);
     }
@@ -145,7 +145,7 @@ class ActividadController extends Controller
      */
     public function update($id)
     {
-        $actividad = Actividad::find($id);
+        $actividad = Proyecto::find($id);
         $actividad->nombre_actividad    = \Request::Input('nombreActividad');
         $actividad->status_actividad    = \Request::Input('statusActividad');
         $actividad->permiso_actividad   = \Request::Input('permisoActividad');
@@ -153,7 +153,7 @@ class ActividadController extends Controller
         $actividad->save();
 
         $representante = \Request::Input('representante');
-        $actividad->representantes()->sync($representante);
+        $actividad->institucion()->sync($representante);
         return redirect('actividad')->with('message','Se ha modificado una Actividad con exito');
     }
     /**
@@ -165,8 +165,8 @@ class ActividadController extends Controller
      */
     public function destroy($id)
     {
-        $actividad = Actividad::find($id);
-        $actividad->representantes()->detach();
+        $actividad = Proyecto::find($id);
+        $actividad->institucion()->detach();
         $actividad->delete();
         return redirect('actividad')->with('message','Se ha eliminado una actividad con exito');
     }

@@ -27,17 +27,17 @@ CREATE TABLE IF NOT EXISTS PERSONA
 --drop table persona;
 
 
-CREATE TYPE STATUS AS ENUM 
-(
-	'No iniciado',
-	'En progreso',
-	'Culminado'
-);
+--CREATE TYPE STATUS AS ENUM
+--(
+--	'No iniciado',
+--	'En progreso',
+--	'Culminado'
+--);
 
-CREATE TYPE PERMISOS AS ENUM
-(	'Publico',
-	'Privado'
-);
+--CREATE TYPE PERMISOS AS ENUM
+--(	'Publico',
+--	'Privado'
+--);
 
 CREATE TABLE IF NOT EXISTS SECTOR_PROYECTO
 (
@@ -84,6 +84,16 @@ CREATE TABLE IF NOT EXISTS TESISTA
 
 --drop table tesista
 
+CREATE TABLE IF NOT EXISTS DEPARTAMENTO
+(
+	id_departamento serial,
+	descripcion_departamento varchar(30),
+	constraint pk_departamento
+	primary key (id_departamento)
+);
+
+--DROP TABLE DEPARTAMENTO;
+
 CREATE TABLE IF NOT EXISTS INSTITUCION
 (
 	id_institucion serial,
@@ -91,8 +101,11 @@ CREATE TABLE IF NOT EXISTS INSTITUCION
 	direccion_institucion varchar(100),
 	correo_institucional varchar(30) not null,
 	telefono_institucion varchar(12),
+	id_departamento int,
 	constraint pk_institucion
-		primary key (id_institucion)
+		primary key (id_institucion),
+	constraint fk_departamento
+	foreign key (id_departamento) references departamento (id_departamento)
 );
 
 --drop table institucion;
@@ -111,15 +124,6 @@ CREATE TABLE IF NOT EXISTS INSTITUCION_PROYECTO
 
 --drop table institucion_proyecto;
 
-CREATE TABLE IF NOT EXISTS DEPARTAMENTO
-(
-	id_departamento serial,
-	descripcion_departamento varchar(30),
-	constraint pk_departamento
-		primary key (id_departamento)
-);
-
---DROP TABLE DEPARTAMENTO;
 
 CREATE TABLE IF NOT EXISTS REPRESENTANTE
 (
@@ -129,8 +133,6 @@ CREATE TABLE IF NOT EXISTS REPRESENTANTE
 	id_persona int,
 	constraint pk_representante 
 		primary key (id_representante),
-	constraint fk_institucion
-		foreign key (id_institucion) references institucion (id_institucion),
 	constraint fk_departamento
 		foreign key (id_departamento) references departamento (id_departamento),
 	constraint fk_persona_representante
