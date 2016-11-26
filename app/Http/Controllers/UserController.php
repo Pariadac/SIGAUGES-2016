@@ -25,7 +25,7 @@ use Illuminate\Http\Request;
 
 use SISAUGES\Http\Requests;
 use SISAUGES\Http\Controllers\Controller;
-use SISAUGES\NivelUsuario;
+use SISAUGES\RolUsuario;
 use SISAUGES\User;
 use Illuminate\Support\Facades\Crypt;
 
@@ -64,8 +64,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuario = User::all();
-        return view('users.index')->with('usuario',$usuario);
+        //$usuario = User::all();
+        //return view('users.index')->with('usuario',$usuario);
+        return view('users.index');
     }
     /**
      * Metodo diseñado para direccionar a la pantalla de agregar un usuario

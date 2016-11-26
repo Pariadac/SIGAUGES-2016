@@ -108,25 +108,25 @@ Route::group(['middleware' => ['web','su']], function () {
     Route::post('departamento/buscar','DepartamentoController@buscar');
 
 
-//rutas para muestras
+//rutas para muestra
 
 
-    Route::get('muestras','MuestraController@index');
-    Route::get('muestras/crear','MuestraController@create');
-    Route::post('muestras/guardar','MuestraController@store');
-    Route::post('muestras/ajaxvalidar','MuestraController@ajaxvalidar');
-    Route::post('muestras/ajaxborrarimg','MuestraController@borrar_img');
-    Route::post('muestras/ajaxrelacionesact','MuestraController@relacionesact');
-    Route::post('muestras/buscar','MuestraController@buscarbdd');
-    Route::post('muestras/buscarfiltro','MuestraController@buscar_filtros');
-    Route::get('muestras/buscarfiltro','MuestraController@buscar_filtros');
-    Route::get('muestras/lista','MuestraController@listar');
-    Route::get('muestras/editar/{id}','MuestraController@edit');
-    Route::get('muestras/detalles/{id}','MuestraController@details');
-    Route::post('muestras/edita/{id}','MuestraController@update');
-    Route::post('muestras/ajaxborrarsingle','MuestraController@eliminarsingle');
-    Route::delete('muestras/eliminar{id}','MuestraController@destroy');
-    Route::post('muestras/pdf','MuestraController@generate_singlepdf');
+    Route::get('muestra','MuestraController@index');
+    Route::get('muestra/crear','MuestraController@create');
+    Route::post('muestra/guardar','MuestraController@store');
+    Route::post('muestra/ajaxvalidar','MuestraController@ajaxvalidar');
+    Route::post('muestra/ajaxborrarimg','MuestraController@borrar_img');
+    Route::post('muestra/ajaxrelacionesact','MuestraController@relacionesact');
+    Route::post('muestra/buscar','MuestraController@buscarbdd');
+    Route::post('muestra/buscarfiltro','MuestraController@buscar_filtros');
+    Route::get('muestra/buscarfiltro','MuestraController@buscar_filtros');
+    Route::get('muestra/lista','MuestraController@listar');
+    Route::get('muestra/editar/{id}','MuestraController@edit');
+    Route::get('muestra/detalles/{id}','MuestraController@details');
+    Route::post('muestra/edita/{id}','MuestraController@update');
+    Route::post('muestra/ajaxborrarsingle','MuestraController@eliminarsingle');
+    Route::delete('muestra/eliminar{id}','MuestraController@destroy');
+    Route::post('muestra/pdf','MuestraController@generate_singlepdf');
 });
 
 Route::group(['middleware'=>['web','admin']],function() {
@@ -196,25 +196,30 @@ Route::group(['middleware'=>['web','oper']],function(){
     Route::post('actualizarActividad/{id}','ActividadController@update');
     Route::delete('actividad/eliminar/{id}','ActividadController@destroy');
 
-    //rutas para muestras
+    //rutas para muestra
 
 
-    Route::get('muestras','MuestraController@index');
-    Route::get('muestras/crear','MuestraController@create');
-    Route::post('muestras/guardar','MuestraController@store');
-    Route::post('muestras/ajaxvalidar','MuestraController@ajaxvalidar');
-    Route::post('muestras/ajaxborrarimg','MuestraController@borrar_img');
-    Route::post('muestras/ajaxrelacionesact','MuestraController@relacionesact');
-    Route::post('muestras/buscar','MuestraController@buscarbdd');
-    Route::post('muestras/buscarfiltro','MuestraController@buscar_filtros');
-    Route::get('muestras/buscarfiltro','MuestraController@buscar_filtros');
-    Route::get('muestras/lista','MuestraController@listar');
-    Route::get('muestras/editar/{id}','MuestraController@edit');
-    Route::get('muestras/detalles/{id}','MuestraController@details');
-    Route::post('muestras/edita/{id}','MuestraController@update');
-    Route::delete('muestras/eliminar{id}','MuestraController@destroy');
-    Route::post('muestras/pdf','MuestraController@generate_singlepdf');
+    Route::get('muestra','MuestraController@index');
+    Route::get('muestra/crear','MuestraController@create');
+    Route::post('muestra/guardar','MuestraController@store');
+    Route::post('muestra/ajaxvalidar','MuestraController@ajaxvalidar');
+    Route::post('muestra/ajaxborrarimg','MuestraController@borrar_img');
+    Route::post('muestra/ajaxrelacionesact','MuestraController@relacionesact');
+    Route::post('muestra/buscar','MuestraController@buscarbdd');
+    Route::post('muestra/buscarfiltro','MuestraController@buscar_filtros');
+    Route::get('muestra/buscarfiltro','MuestraController@buscar_filtros');
+    Route::get('muestra/lista','MuestraController@listar');
+    Route::get('muestra/editar/{id}','MuestraController@edit');
+    Route::get('muestra/detalles/{id}','MuestraController@details');
+    Route::post('muestra/edita/{id}','MuestraController@update');
+    Route::delete('muestra/eliminar{id}','MuestraController@destroy');
+    Route::post('muestra/pdf','MuestraController@generate_singlepdf');
+
 });
+
+//Test rutes
+    Route::get('test','TestController@index');
+    Route::post('test/registerform','TestController@renderform');
 
 
 Route::get('prueba', function(){return "hola";});
