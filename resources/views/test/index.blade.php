@@ -59,7 +59,7 @@
                 {!! Form::close() !!}
 
                 <!-- Modals -->
-                <div id="modalForm" class="zoom-anim-dialog modal-block modal-block-primary mfp-hide">
+                <div id="modalForm" class="zoom-anim-dialog modal-block-lg modal-block-primary mfp-hide">
                 </div>
             </section>
         </div>
