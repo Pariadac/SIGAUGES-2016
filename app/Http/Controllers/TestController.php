@@ -38,19 +38,22 @@ class TestController extends Controller
 				'type'	=> 'text',
 				'value'	=> '',
 				'id'	=> 'nombre',
-				'label'	=> 'Campo'
+				'label'	=> 'Campo',
+				'placeholder'	=>	''
 			),
 			'apellido' => array(
 				'type'	=> 'text',
 				'value'	=> '',
 				'id'	=> 'apellido',
-				'label'	=> 'Campo'
+				'label'	=> 'Campo',
+				'placeholder'	=>	''
 			),
 			'cedula' => array(
 				'type'	=> 'text',
 				'value'	=> '',
 				'id'	=> 'cedula',
-				'label'	=> 'Campo'
+				'label'	=> 'Campo',
+				'placeholder'	=>	''
 			),
 			'telefono' => array(
 				'type'		=> 'select',
@@ -58,13 +61,20 @@ class TestController extends Controller
 				'id'		=> 'telefono',
 				'label'		=> 'Campo',
 				'options'	=> array(
-					'212',
-					'412',
-					'414',
-					'424',
-					'416',
-					'426'
-				)
+					'Codigo',
+					'212'=>'212',
+					'412'=>'412',
+					'414'=>'414',
+					'424'=>'424',
+					'416'=>'415',
+					'426'=>'426'
+				),
+				'placeholder'	=>	'',
+				'extrafields'=>array(
+
+					array('name'	=> 'telefono_complement','value'	=>	'', 'placeholder'	=>	'XXX-XXXX')
+
+				),
 			),
 			'rol' => array(
 				'type'		=> 'select',
@@ -72,28 +82,33 @@ class TestController extends Controller
 				'id'		=> 'telefono',
 				'label'		=> 'Campo',
 				'options'	=> array(
-					'XXX',
-					'YYY',
-					'ZZZ',
-				)
+					'Seleccione rol del usuario',
+					'XXX'=>'XXX',
+					'YYY'=>'YYY',
+					'ZZZ'=>'ZZZ',
+				),
+				'placeholder'	=>	''
 			),
 			'email' => array(
 				'type'	=> 'text',
 				'value'	=> '',
 				'id'	=> 'email',
-				'label'	=> 'Campo'
+				'label'	=> 'Campo',
+				'placeholder'	=>	''
 			),
 			'username' => array(
 				'type'	=> 'text',
 				'value'	=> '',
 				'id'	=> 'username',
-				'label'	=> 'Campo'
+				'label'	=> 'Campo',
+				'placeholder'	=>	''
 			),
 			'password' => array(
 				'type'	=> 'text',
 				'value'	=> '',
 				'id'	=> 'password',
-				'label'	=> 'Campo'
+				'label'	=> 'Campo',
+				'placeholder'	=>	''
 			),
 		);
 

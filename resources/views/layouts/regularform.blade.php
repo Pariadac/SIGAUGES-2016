@@ -57,28 +57,54 @@
 
 				        	@elseif( $value['type']=='select' )
 
-				        		<div class="form-group col-md-6">
-					                <label class="col-md-4 control-label" for="{!! $key !!}">{!! $value['label'] !!}</label>
-					                <div class="col-md-8">
-					                    
-					                    <div class="col-md-4">
-					                        <select data-plugin-select name="{!! $key !!}" id="{!! $value['id'] !!}" class="form-control populate" value="{!! $value['value'] !!}">
-					                            
+				        		@if(isset($value['extrafields']))
+
+				        			<div class="form-group col-md-6">
+						                <label class="col-md-4 control-label" for="{!! $key !!}">{!! $value['label'] !!}</label>
+						                <div class="col-md-8" style="padding: 0px">
+						                    
+						                    <div class="col-md-4">
+						                        <select data-plugin-select name="{!! $key !!}" id="{!! $value['id'] !!}" class="form-control populate" value="{!! $value['value'] !!}">
+						                            
+						                        	@foreach( $value['options'] as $key2 => $value2 )
+
+						                        		<option value="{!! $key2 !!}"> {!! $value2 !!} </option>
+
+						                        	@endforeach
+
+						                        </select>
+						                    </div>
+						                    @foreach( $value['extrafields'] as $key2 => $value2 )
+
+							                    <div class="col-md-8">
+							                        <input type="text" class="form-control" id="{!! $value2['name'] !!}" name="{!! $value2['name'] !!}" value="{!! $value2['value'] !!}" placeholder="{!! $value2['placeholder'] !!}">
+							                    </div>
+
+							                @endforeach
+
+						                </div>
+						            </div>
+
+				        		@else
+
+
+				        			<div class="form-group col-md-6">
+						                <label class="col-md-4 control-label" for="{!! $key !!}">{!! $value['label'] !!}</label>
+						                <div class="col-md-8">
+						                    <select data-plugin-select name="{!! $key !!}" id="{!! $value['id'] !!}" class="form-control populate" value="{!! $value['value'] !!}">
+						                            
 					                        	@foreach( $value['options'] as $key2 => $value2 )
 
 					                        		<option value="{!! $key2 !!}"> {!! $value2 !!} </option>
 
 					                        	@endforeach
 
-					                        </select>
-					                    </div>
+						                    </select>
+						                </div>
+						            </div>
 
-					                    <div class="col-md-8">
-					                        <input type="text" class="form-control" id="telefono" name="telefono">
-					                    </div>
 
-					                </div>
-					            </div>
+				        		@endif
 
 				        	@else
 
