@@ -9,66 +9,99 @@
 
 			<div class="waitingimg" style="display: none;">
 		    	<div class="waitingback"></div>
+		    	<footer class="panel-footer">
+					<div class="row">
+						<div class="col-md-12 text-right">
+							<button class="btn btn-default modal-dismiss">Cancelar</button>
+						</div>
+					</div>
+				</footer>
 		    </div>
 
-			<div class="panel-body">
-
-				<div class="formcontent">
-			        @foreach( $fields as $key => $value )
-
-			        	@if( $value['type']=='text' )
-
-			        		<div class="form-group col-md-6">
-				                <label class="col-md-4 control-label" for="{!! $key !!}">{!! $value['label'] !!}</label>
-				                <div class="col-md-8">
-				                    <input type="{!! $value['type'] !!}" class="form-control" id="{!! $value['id'] !!}" name="{!! $key !!}" value="{!! $value['value'] !!}">
-				                </div>
-				            </div>
-
-			        	@elseif( $value['type']=='select' )
-
-			        		<div class="form-group col-md-6">
-				                <label class="col-md-4 control-label" for="{!! $key !!}">{!! $value['label'] !!}</label>
-				                <div class="col-md-8">
-				                    
-				                    <div class="col-md-4">
-				                        <select data-plugin-select name="{!! $key !!}" id="{!! $value['id'] !!}" class="form-control populate" value="{!! $value['value'] !!}">
-				                            
-				                        	@foreach( $value['options'] as $key2 => $value2 )
-
-				                        		<option value="{!! $key2 !!}"> {!! $value2 !!} </option>
-
-				                        	@endforeach
-
-				                        </select>
-				                    </div>
-
-				                    <div class="col-md-8">
-				                        <input type="text" class="form-control" id="telefono" name="telefono">
-				                    </div>
-
-				                </div>
-				            </div>
-
-			        	@else
-
-
-			        	@endif
-
-			        @endforeach
-			    </div>
-
-	        </div>
-
-			<footer class="panel-footer">
-				<div class="row">
-					<div class="col-md-12 text-right">
-						<button class="btn btn-primary" name="finregistro">Finalizar Registro</button>
-						<button class="btn btn-default modal-dismiss">Cancelar</button>
+		    <div id="result-mdl" style="display: none;">
+		    	<div class="panel-body ">
+					<div class="modal-wrapper">
+						<div class="modal-icon">
+							<i class=""></i>
+						</div>
+						<div class="modal-text">
+							<h4 class="msn-alerta-header"></h4>
+							<p class="msn-alerta-body"></p>
+						</div>
 					</div>
 				</div>
-			</footer>
+				<footer class="panel-footer">
+					<div class="row">
+						<div class="col-md-12 text-right">
+							<button id="mld-dismiss-fin" class="">OK</button>
+						</div>
+					</div>
+				</footer>
+		    </div>
+
+
+		    <div id="mdl-truebody">
+				<div class="panel-body">
+
+					<div class="formcontent">
+				        @foreach( $fields as $key => $value )
+
+				        	@if( $value['type']=='text' )
+
+				        		<div class="form-group col-md-6">
+					                <label class="col-md-4 control-label" for="{!! $key !!}">{!! $value['label'] !!}</label>
+					                <div class="col-md-8">
+					                    <input type="{!! $value['type'] !!}" class="form-control" id="{!! $value['id'] !!}" name="{!! $key !!}" value="{!! $value['value'] !!}">
+					                </div>
+					            </div>
+
+				        	@elseif( $value['type']=='select' )
+
+				        		<div class="form-group col-md-6">
+					                <label class="col-md-4 control-label" for="{!! $key !!}">{!! $value['label'] !!}</label>
+					                <div class="col-md-8">
+					                    
+					                    <div class="col-md-4">
+					                        <select data-plugin-select name="{!! $key !!}" id="{!! $value['id'] !!}" class="form-control populate" value="{!! $value['value'] !!}">
+					                            
+					                        	@foreach( $value['options'] as $key2 => $value2 )
+
+					                        		<option value="{!! $key2 !!}"> {!! $value2 !!} </option>
+
+					                        	@endforeach
+
+					                        </select>
+					                    </div>
+
+					                    <div class="col-md-8">
+					                        <input type="text" class="form-control" id="telefono" name="telefono">
+					                    </div>
+
+					                </div>
+					            </div>
+
+				        	@else
+
+
+				        	@endif
+
+				        @endforeach
+				    </div>
+
+		        </div>
+
+				<footer class="panel-footer">
+					<div class="row">
+						<div class="col-md-12 text-right">
+							<button class="btn btn-primary" name="finregistro">Finalizar Registro</button>
+							<button class="btn btn-default modal-dismiss">Cancelar</button>
+						</div>
+					</div>
+				</footer>
+
+			</div>
 
 	    {!! Form::close() !!}
 
     </section>
+

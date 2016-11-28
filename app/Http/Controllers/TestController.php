@@ -113,6 +113,30 @@ class TestController extends Controller
     	echo json_encode($retorno);
 
     }
+
+    public function crear(Request $request){
+
+    	//Validar Datos
+
+    	$val=false;
+
+    	$retorno=array();
+
+    	if ($val) {
+    		//Datos Validos
+    		$retorno['resultado']='success';
+    		$retorno['mensaje']='El registro de los datos fue exitoso...';
+
+    	}else{
+    		//Datos Invalidos
+    		$retorno['resultado']='danger';
+    		$retorno['mensaje']='Los datos no suministrados no son validos';
+
+    	}
+
+    	echo json_encode($retorno);
+
+    }
 }
 
 

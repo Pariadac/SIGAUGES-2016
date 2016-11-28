@@ -24,6 +24,9 @@
 	height: 120px !important;
 }
 
+.panel-body{
+	border-radius: 0px;
+}
 
 .muestralista{
 	width: 120px;
@@ -40,8 +43,8 @@
 }
 
 .waitingback{
-	width: 150px;
-	min-height: 150px;
+	width: 200px;
+	min-height: 200px;
 	margin: auto;
 	background-image: url('../images/carga.gif');
 	background-size: 150px 150px;

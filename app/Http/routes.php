@@ -220,6 +220,7 @@ Route::group(['middleware'=>['web','oper']],function(){
 //Test rutes
     Route::get('test','TestController@index');
     Route::post('test/registerform','TestController@renderform');
+    Route::post('test/crear','TestController@crear');
 
 
 Route::get('prueba', function(){return "hola";});

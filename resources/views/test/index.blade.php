@@ -12,7 +12,7 @@
                 <div class="panel-body">
 
                     <div class="form-group col-md-3 modalscript">
-                        <a class="btn btn-default click" href="#" data-typeform="add">Agregar Usuario</a>
+                        <a class="btn btn-default click" href="#" data-typeform="add" data-taction="test/registerform">Agregar Usuario</a>
                     </div>
 
                     <div class="form-group col-md-12" id="principal_muestras_table">
@@ -51,15 +51,15 @@
 
                 <!--HiddenForm-->
 
-                {!!Form::open(['url'=>'test/registerform/', 'class'=>'hiddenform' , 'method' => 'post' , 'id'=>'principalform'])!!}
+                {!!Form::open(['url'=>'#', 'class'=>'hiddenform' , 'method' => 'post' , 'id'=>'principalform'])!!}
 
-                    <a class="modal-with-form btn btn-default" href="#modalForm" id="openmodalbtn"></a>
+                    <a class="mb-xs mt-xs mr-xs modal-with-zoom-anim btn btn-default openmodalbtn" href="#modalForm"></a>
                     <input type="hidden" name="typeform" value="">
 
                 {!! Form::close() !!}
 
                 <!-- Modals -->
-                <div id="modalForm" class="modal-block modal-block-primary mfp-hide">
+                <div id="modalForm" class="zoom-anim-dialog modal-block modal-block-primary mfp-hide">
                 </div>
             </section>
         </div>
