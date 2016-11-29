@@ -60,6 +60,7 @@ jQuery(document).ready(function() {
             },
             success:    function(data){
 
+
             	$('#modalForm').removeClass('modal-block-danger modal-block-warning modal-block-success  modal-block-primary');
 
             	if (data.resultado=='success') {
@@ -96,11 +97,13 @@ jQuery(document).ready(function() {
             		}
             	}
 
+            	setTimeout(function(){
 
-            	$('#modalmicroform > .waitingimg').slideUp('fast','swing',function(){
+	            	$('#modalmicroform > .waitingimg').slideUp('fast','swing',function(){
+	            		$('#result-mdl').slideDown('fast','swing');
+	            	});
 
-            		$('#result-mdl').slideDown('fast','swing');
-            	});
+	            },1200);
             	
             },
             error:      function(){
