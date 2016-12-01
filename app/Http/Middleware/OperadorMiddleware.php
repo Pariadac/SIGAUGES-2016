@@ -25,13 +25,13 @@ class OperadorMiddleware
      */
     public function handle($request, Closure $next)
     {
-        /*if($this->auth->user())
+        if($this->auth->user())
         {
-            if($this->auth->user()->nivelUsuarios->keyBy('id_nivel_de_usuario')->has(3) != true)
+            if($this->auth->user()->id_rol != 1)
             {
                 return redirect('/');
             }
-        }*/
+        }
         return $next($request);
     }
 }

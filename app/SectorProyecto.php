@@ -4,16 +4,16 @@ namespace SISAUGES;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SectorActividad extends Model
+class SectorProyecto extends Model
 {
     public $timestamps = false;
-    protected $table = 'sector_actividad';
-    protected $primaryKey = 'id_sector_ac';
+    protected $table = 'sector_proyecto';
+    protected $primaryKey = 'id_sector_proyecto';
     protected $fillable = ['descripcion_sector'];
-    protected $guarded = ['id_sector_ac'];
+    protected $guarded = ['id_sector_pr'];
 
-    public function actividades()
+    public function proyecto()
     {
-        return $this->hasMany(Actividad::class,'id_sector_ac');
+        return $this->hasMany(Proyecto::class,'id_sector_ac');
     }
 }

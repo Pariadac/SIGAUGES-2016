@@ -9,7 +9,7 @@ class Institucion extends Model
     public $timestamps=false;
     protected $table="institucion";
     protected $primaryKey="id_institucion";
-    protected $fillable = ['nombre_institucion','direccion_institucion','telefono_institucion'];
+    protected $fillable = ['nombre_institucion','direccion_institucion','telefono_institucion','correo_institucion','status'];
     protected $guarded = ['id_institucion'];
 
     public function proyecto()
@@ -20,11 +20,5 @@ class Institucion extends Model
                                     'id_institucion');
     }
 
-    public function representante()
-    {
-        return $this->belongsTo(  Representante::class,
-                                'id_representante',
-                                'id_institucion');
-    }
 }
 ?>

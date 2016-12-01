@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS PERSONA
 	apellido varchar(30),
 	email varchar(30) not null,
 	telefono varchar(11),
+	status boolean,
 	constraint pk_persona 
 		primary key (id_persona),
 	constraint cedula_unica
@@ -26,23 +27,30 @@ CREATE TABLE IF NOT EXISTS PERSONA
 
 --drop table persona;
 
-
---CREATE TYPE STATUS AS ENUM
---(
---	'No iniciado',
---	'En progreso',
---	'Culminado'
---);
-
---CREATE TYPE PERMISOS AS ENUM
---(	'Publico',
---	'Privado'
---);
+DO $$
+BEGIN
+	IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'STATUS') THEN
+		CREATE TYPE STATUS AS ENUM
+		(
+			'No iniciado',
+			'En progreso',
+			'Culminado'
+		);
+	END IF;
+	IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'PERMISOS') THEN
+		CREATE TYPE PERMISOS AS ENUM
+		(		
+			'Publico',
+			'Privado'
+		);
+	END IF;
+END$$;
 
 CREATE TABLE IF NOT EXISTS SECTOR_PROYECTO
 (
 	id_sector_pr serial,
 	descripcion_sector varchar(20),
+	status boolean,
 	constraint pk_setor_proyecto
 		primary key (id_sector_pr)
 );
@@ -67,32 +75,23 @@ CREATE TABLE IF NOT EXISTS PROYECTO
 
 
 
-CREATE TABLE IF NOT EXISTS TESISTA
+CREATE TABLE IF NOT EXISTS ESTUDIANTE
 (
-	id_tesista serial,
-	carrera_tesista varchar(25),
-	semestre_tesista varchar (5),
+	id_estudiante serial,
+	carrera_estudiante varchar(25),
+	semestre_estudiante varchar (5),
 	id_proyecto integer,
 	id_persona int,
-	constraint pk_tesista
-		primary key (id_tesista),
-	constraint fk_proyecto_tesista
+	status boolean,
+	constraint pk_estudiante
+		primary key (id_estudiante),
+	constraint fk_proyecto_estudiante
 		foreign key (id_proyecto) references proyecto(id_proyecto),
-	constraint fk_persona_tesista
+	constraint fk_persona_estudiante
 		foreign key (id_persona) references persona(id_persona)
 );
 
---drop table tesista
-
-CREATE TABLE IF NOT EXISTS DEPARTAMENTO
-(
-	id_departamento serial,
-	descripcion_departamento varchar(30),
-	constraint pk_departamento
-	primary key (id_departamento)
-);
-
---DROP TABLE DEPARTAMENTO;
+--drop table estudiante
 
 CREATE TABLE IF NOT EXISTS INSTITUCION
 (
@@ -102,13 +101,26 @@ CREATE TABLE IF NOT EXISTS INSTITUCION
 	correo_institucional varchar(30) not null,
 	telefono_institucion varchar(12),
 	id_departamento int,
+	status boolean,
 	constraint pk_institucion
-		primary key (id_institucion),
-	constraint fk_departamento
-	foreign key (id_departamento) references departamento (id_departamento)
+		primary key (id_institucion)
 );
 
 --drop table institucion;
+
+CREATE TABLE IF NOT EXISTS DEPARTAMENTO
+(
+	id_departamento serial,
+	descripcion_departamento varchar(30),
+	id_institucion int,
+	status boolean,
+	constraint pk_departamento
+		primary key (id_departamento),
+	constraint fk_institucion
+		foreign key (id_institucion) references institucion (id_institucion)
+);
+
+--DROP TABLE DEPARTAMENTO;
 
 CREATE TABLE IF NOT EXISTS INSTITUCION_PROYECTO
 (
@@ -124,29 +136,44 @@ CREATE TABLE IF NOT EXISTS INSTITUCION_PROYECTO
 
 --drop table institucion_proyecto;
 
-
-CREATE TABLE IF NOT EXISTS REPRESENTANTE
+CREATE TABLE IF NOT EXISTS STATUS_TUTOR
 (
-	id_representante serial,
-	id_institucion int,
+    id_status serial,
+    fecha_ingreso date,
+    fecha_egreso date,
+    observaciones varchar(300),
+    constraint pk_status_tutor
+		primary key (id_status)
+);
+
+--drop table status_TUTOR
+    
+
+CREATE TABLE IF NOT EXISTS TUTOR
+(
+	id_tutor serial,
 	id_departamento int,
 	id_persona int,
-	constraint pk_representante 
-		primary key (id_representante),
+	id_status int,
+	constraint pk_tutor 
+		primary key (id_tutor),
 	constraint fk_departamento
 		foreign key (id_departamento) references departamento (id_departamento),
-	constraint fk_persona_representante
-		foreign key (id_persona) references persona(id_persona)
+	constraint fk_persona_tutor
+		foreign key (id_persona) references persona(id_persona),
+	constraint fk_tutor_status
+		foreign key (id_status) references status_tutor(id_status)
 
 );
 	
---drop table representante;
+--drop table tutor;
 
 
 CREATE TABLE IF NOT EXISTS ROL_USUARIO
 (
 	id_rol serial,
 	descripcion_rol varchar(30),
+    status boolean,
 	constraint pk_rol_de_usuario 
 		primary key (id_rol)
 );
@@ -158,9 +185,9 @@ CREATE TABLE IF NOT EXISTS USUARIO
 	id_usuario serial,
 	username varchar(20),
 	password varchar(60),
-	id_nivel_de_usuario integer,
 	id_rol int,
 	id_persona int,
+	status boolean,
 	remember_token varchar(100),
 	constraint pk_usuario
 		primary key (id_usuario),
@@ -183,6 +210,7 @@ CREATE TABLE IF NOT EXISTS MUESTRA
   descripcion_muestra character varying(200),
   fecha_recepcion date,
   fecha_analisis date,
+  status boolean,
   CONSTRAINT pk_muestra PRIMARY KEY (id_muestra)
 );
 
@@ -192,6 +220,7 @@ CREATE TABLE IF NOT EXISTS TECNICA_ESTUDIO
 (
 	id_tecnica_estudio serial,
 	descripcion_tecnica_estudio varchar(30),
+    status boolean,
 	constraint pk_tecnica_estudio 
 		primary key (id_tecnica_estudio)
 );
@@ -234,6 +263,7 @@ CREATE TABLE IF NOT EXISTS LABORATORIO
 	nombre_laboratorio varchar(20),
 	ubicacion_laboratorio varchar(50),
 	telefono_laboratorio varchar(13),
+    status boolean,
 	constraint pk_laboratorio
 		primary key (id_laboratorio)
 );

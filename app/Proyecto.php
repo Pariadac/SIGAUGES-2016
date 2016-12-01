@@ -17,9 +17,9 @@ class Proyecto extends Model
         return $this->belongsToMany(Institucion::class,'institucion_proyecto','id_proyecto','id_institucion');
     }
 
-    public function tesistas()
+    public function estudiante()
     {
-       return $this->hasMany(Tesista::class,'id_actividad');
+       return $this->hasMany(Estudiante::class,'id_estudiante','id_proyecto');
     }
 
     public function muestras()
