@@ -4,13 +4,12 @@ namespace SISAUGES;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Representante extends Model
+class Tutor extends Model
 {
     public $timestamps = false;
-    protected $table = "representante";
-    protected $primaryKey = "id_representante";
-    protected $fillable = ['cedula','nombre','apellido','email','telefono'];
-    protected $guarded = ['id_representante','id_persona'];
+    protected $table = "tutor";
+    protected $primaryKey = "id_tutor";
+    protected $guarded = ['id_tutor','id_departamento','id_persona'];
 
     public function institucion()
     {
