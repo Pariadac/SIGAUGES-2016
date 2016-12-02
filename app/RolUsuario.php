@@ -9,6 +9,7 @@ class RolUsuario extends Model
     public $timestamps=false;
     protected $table='rol_usuario';
     protected $primaryKey='id_rol';
+    protected $fillable = ['descripcion_rol','status'];
 
     public function usuarios()
     {
