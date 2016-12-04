@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -28,8 +24,8 @@ Route::get('/', function () {
 
 
 Route::group(['middleware'=>'web'], function(){
-    Route::get('/login', function(){
-        return redirect('login');
+    Route::get('/', function(){
+        return view('auth.login');
     });
 });
 
@@ -47,7 +43,7 @@ Route::group(['middleware' => ['web','su']], function () {
     Route::delete('tesista/eliminar/{id}','TesistaController@destroy');
 
 
-//Rutas para usuarios
+    //Rutas para usuarios
 
     Route::get('usuario','UserController@index');
     Route::get('crearUsuario','UserController@create');
