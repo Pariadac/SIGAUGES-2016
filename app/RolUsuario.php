@@ -10,6 +10,7 @@ class RolUsuario extends Model
     protected $table='rol_usuario';
     protected $primaryKey='id_rol';
     protected $fillable = ['descripcion_rol','status'];
+    protected $guarded = ['id_rol'];
 
     public function usuarios()
     {

@@ -15,7 +15,8 @@ class Muestra extends Model
                             'tipo_muestra',
                             'descripcion_muestra',
                             'fecha_recepcion',
-                            'fecha_analisis'];
+                            'fecha_analisis',
+                            'status'];
     protected $guarded = ['id_muestra','id_usuario'];
 
     public function usuario()
@@ -23,9 +24,9 @@ class Muestra extends Model
         return $this->belongsTo(User::class,'id_usuario','id_muestra');
     }
 
-    public function actividad()
+    public function proyecto()
     {
-        return $this->belongsToMany(Actividad::class,'muestra_actividad','id_muestra','id_actividad');
+        return $this->belongsToMany(Proyecto::class,'muestra_proyecto','id_muestra','id_proyecto');
     }
 
     public function tecnicaEstudio()

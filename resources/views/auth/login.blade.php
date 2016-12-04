@@ -40,7 +40,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
-                            <h1><strong>Bienvenido</strong>!!!</h1>
+                            <h1><strong>Bienvenidos</strong></h1>
                         </div>
                     </div>
                     <div class="row">
@@ -77,7 +77,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only" for="password">Contraseña</label>
-                                        <input type="password" name="password" placeholder="Contraseña..." class="password form-control @if(isset($errors) && $errors->any()git) input-error @endif" id="password">
+                                        <input type="password" name="password" placeholder="Contraseña..." class="password form-control @if(isset($errors) && $errors->any()) input-error @endif" id="password">
                                     </div>
                                     <button type="submit" class="btn">Iniciar Sesión!</button>
                                     
