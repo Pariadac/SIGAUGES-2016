@@ -127,7 +127,7 @@ class InstitucionController extends Controller
 
         //Validar Datos
 
-        $val=false;
+        $val=true;
 
         $retorno=array();
 
