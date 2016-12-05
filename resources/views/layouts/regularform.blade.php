@@ -18,7 +18,7 @@
 				</footer>
 		    </div>
 
-		    <div id="result-mdl" style="display: none;">
+		    <div id="result-mdl" style="display: none;" data-tmodalorigin="{{(!$fields)?'modal-block-warning':'modal-block-primary'}}">
 		    	<div class="panel-body ">
 					<div class="modal-wrapper">
 						<div class="modal-icon">
@@ -39,93 +39,123 @@
 				</footer>
 		    </div>
 
+		    @if($fields)
+			    <div id="mdl-truebody">
+					<div class="panel-body">
 
-		    <div id="mdl-truebody">
-				<div class="panel-body">
+						<div class="formcontent">
+					        @foreach( $fields as $key => $value )
 
-					<div class="formcontent">
-				        @foreach( $fields as $key => $value )
+					        	@if( $value['type']=='text' )
 
-				        	@if( $value['type']=='text' )
-
-				        		<div class="form-group col-md-6">
-					                <label class="col-md-4 control-label" for="{!! $key !!}">{!! $value['label'] !!}</label>
-					                <div class="col-md-8">
-					                    <input type="{!! $value['type'] !!}" class="form-control" id="{!! $value['id'] !!}" name="{!! $key !!}" value="{!! $value['value'] !!}">
-					                </div>
-					            </div>
-
-				        	@elseif( $value['type']=='select' )
-
-				        		@if(isset($value['extrafields']))
-
-				        			<div class="form-group col-md-6">
+					        		<div class="form-group col-md-6">
 						                <label class="col-md-4 control-label" for="{!! $key !!}">{!! $value['label'] !!}</label>
-						                <div class="col-md-8" style="padding: 0px">
-						                    
-						                    <div class="col-md-4">
-						                        <select data-plugin-select name="{!! $key !!}" id="{!! $value['id'] !!}" class="form-control populate" value="{!! $value['value'] !!}">
-						                            
+						                <div class="col-md-8">
+						                    <input type="{!! $value['type'] !!}" class="form-control" id="{!! $value['id'] !!}" name="{!! $key !!}" value="{!! $value['value'] !!}">
+						                </div>
+						            </div>
+
+						        @elseif( $value['type']=='hidden' )
+
+						        	<input type="{!! $value['type'] !!}" class="form-control" id="{!! $value['id'] !!}" name="{!! $key !!}" value="{!! $value['value'] !!}">
+
+					        	@elseif( $value['type']=='select' )
+
+					        		@if(isset($value['extrafields']))
+
+					        			<div class="form-group col-md-6">
+							                <label class="col-md-4 control-label" for="{!! $key !!}">{!! $value['label'] !!}</label>
+							                <div class="col-md-8" style="padding: 0px">
+							                    
+							                    <div class="col-md-4">
+							                        <select data-plugin-select name="{!! $key !!}" id="{!! $value['id'] !!}" class="form-control populate" value="{!! $value['value'] !!}">
+							                            
+							                        	@foreach( $value['options'] as $key2 => $value2 )
+
+							                        		<option value="{!! $key2 !!}" {{ ($value['value']==$key2)? 'selected' : '' }}> {!! $value2 !!} </option>
+
+							                        	@endforeach
+
+							                        </select>
+							                    </div>
+							                    @foreach( $value['extrafields'] as $key2 => $value2 )
+
+								                    <div class="col-md-8">
+								                        <input type="text" class="form-control" id="{!! $value2['name'] !!}" name="{!! $value2['name'] !!}" value="{!! $value2['value'] !!}" placeholder="{!! $value2['placeholder'] !!}">
+								                    </div>
+
+								                @endforeach
+
+							                </div>
+							            </div>
+
+					        		@else
+
+
+					        			<div class="form-group col-md-6">
+							                <label class="col-md-4 control-label" for="{!! $key !!}">{!! $value['label'] !!}</label>
+							                <div class="col-md-8">
+							                    <select data-plugin-select name="{!! $key !!}" id="{!! $value['id'] !!}" class="form-control populate" value="{!! $value['value'] !!}">
+							                            
 						                        	@foreach( $value['options'] as $key2 => $value2 )
 
-						                        		<option value="{!! $key2 !!}"> {!! $value2 !!} </option>
+						                        		<option value="{!! $key2 !!}" {{ ($value['value']==$key2)? 'selected' : '' }}> {!! $value2 !!} </option>
 
 						                        	@endforeach
 
-						                        </select>
-						                    </div>
-						                    @foreach( $value['extrafields'] as $key2 => $value2 )
-
-							                    <div class="col-md-8">
-							                        <input type="text" class="form-control" id="{!! $value2['name'] !!}" name="{!! $value2['name'] !!}" value="{!! $value2['value'] !!}" placeholder="{!! $value2['placeholder'] !!}">
-							                    </div>
-
-							                @endforeach
-
-						                </div>
-						            </div>
-
-				        		@else
+							                    </select>
+							                </div>
+							            </div>
 
 
-				        			<div class="form-group col-md-6">
-						                <label class="col-md-4 control-label" for="{!! $key !!}">{!! $value['label'] !!}</label>
-						                <div class="col-md-8">
-						                    <select data-plugin-select name="{!! $key !!}" id="{!! $value['id'] !!}" class="form-control populate" value="{!! $value['value'] !!}">
-						                            
-					                        	@foreach( $value['options'] as $key2 => $value2 )
+					        		@endif
 
-					                        		<option value="{!! $key2 !!}"> {!! $value2 !!} </option>
-
-					                        	@endforeach
-
-						                    </select>
-						                </div>
-						            </div>
+					        	@else
 
 
-				        		@endif
+					        	@endif
 
-				        	@else
+					        @endforeach
+					    </div>
 
+			        </div>
 
-				        	@endif
+					<footer class="panel-footer">
+						<div class="row">
+							<div class="col-md-12 text-right">
+								<button class="btn btn-primary" name="finregistro">Finalizar Registro</button>
+								<button class="btn btn-default modal-dismiss">Cancelar</button>
+							</div>
+						</div>
+					</footer>
 
-				        @endforeach
-				    </div>
+				</div>
 
-		        </div>
+			@else
 
-				<footer class="panel-footer">
-					<div class="row">
-						<div class="col-md-12 text-right">
-							<button class="btn btn-primary" name="finregistro">Finalizar Registro</button>
-							<button class="btn btn-default modal-dismiss">Cancelar</button>
+				<div id="mdl-truebody">
+					<div class="panel-body ">
+						<div class="modal-wrapper">
+							<div class="modal-icon">
+								<i class="fa fa-warning"></i>
+							</div>
+							<div class="modal-text">
+								<h4 >Alerta!</h4>
+								<p>¿Esta seguro que desea eliminar este dato?</p>
+							</div>
 						</div>
 					</div>
-				</footer>
+					<footer class="panel-footer">
+						<div class="row">
+							<div class="col-md-12 text-right">
+								<button class="btn btn-warning " name="finregistro">SI</button>
+								<button class="btn btn-default modal-dismiss">NO</button>
+							</div>
+						</div>
+					</footer>
+				</div>
 
-			</div>
+			@endif
 
 	    {!! Form::close() !!}
 

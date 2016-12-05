@@ -1,5 +1,5 @@
-
 jQuery(document).ready(function() {
+
 	
     /*Ajax regular form section request*/
 
@@ -10,6 +10,7 @@ jQuery(document).ready(function() {
         var form=$('#principalform');
 
         $('#principalform> input[name=typeform]').attr('value',$(this).data('typeform'));
+        $('#principalform> input[name=field_id]').attr('value',$(this).data('field-id'));
 
         var inform= form.serializeArray();
 
@@ -36,7 +37,46 @@ jQuery(document).ready(function() {
 
         });
 
+    }).on('click','a.deleted-row',function(event){
+
+        event.preventDefault();
+
+        var form=$('#principalform');
+
+        $('#modalForm').removeClass('modal-block-danger modal-block-warning modal-block-success  modal-block-primary');
+
+        $('#modalForm').addClass('modal-block-warning');
+
+        $('#principalform> input[name=typeform]').attr('value',$(this).data('typeform'));
+        $('#principalform> input[name=field_id]').attr('value',$(this).data('field-id'));
+
+        var inform= form.serializeArray();
+
+        var taction=form.attr('action').replace('#', $(this).data('taction'));
+
+        var promise=$.ajax({
+
+            url:taction,
+            cache: false,
+            data:inform,
+            type:"POST",
+            dataType: "json",
+            beforeSend: function(){},
+            success:    function(data){
+
+                if (data.result) {
+                    $('#modalForm').empty();
+                    $('#modalForm').append(data.html);
+                    $('.openmodalbtn').click();
+                }
+
+            },
+            error:      function(){}
+
+        });
+
     });
+
 
     /*Ajax modal form section request*/
 
@@ -163,7 +203,7 @@ jQuery(document).ready(function() {
 
 			$('#modalForm').removeClass('modal-block-danger modal-block-warning modal-block-success  modal-block-primary');
 
-			$('#modalForm').addClass('modal-block-primary');
+			$('#modalForm').addClass($('#result-mdl').data('tmodalorigin'));
 
 			$('#mdl-truebody').slideDown('fast','swing');
 

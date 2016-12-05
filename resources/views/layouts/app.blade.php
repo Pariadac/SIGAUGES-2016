@@ -173,6 +173,7 @@
             <script src="{{url('assets/javascripts/tables/examples.datatables.default.js' )}}"></script>
             <script src="{{url('assets/javascripts/tables/examples.datatables.row.with.details.js' )}}"></script>
             <script src="{{url('assets/javascripts/tables/examples.datatables.tabletools.js' )}}"></script>
+            @stack('scripts')
 
         </section>
     </body>
