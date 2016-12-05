@@ -15,7 +15,7 @@
                         <a class="btn btn-default click" href="#" data-typeform="add" data-taction="institucion/registerform" data-field-id="0">Agregar <i class="fa fa-arrow-up" aria-hidden="true"></i></a>
                     </div>
 
-                    <div class="form-group col-md-12" id="principal_muestras_table">
+                    <div class="form-group col-md-12">
                         
                         {!!Form::open(['url'=>'institucion/buscar' , 'method' => 'post' , 'id'=>'tableform'])!!}
 
@@ -53,7 +53,7 @@
                                             <td>{{$institucion->telefono_institucion}}</td>
                                             <td class="actions modalscript">
                                                 <a href="#" class="btn btn-warning click" data-typeform="modify" data-taction="institucion/registerform" data-field-id="{{$institucion->id_institucion}}"><i class="fa fa-pencil"></i></a>
-                                                <a href="#" class="btn btn-danger remove-row" data-typeform="deleted" data-taction="institucion/registerform"><i class="fa fa-trash-o"></i></a>
+                                                <a href="#" class="btn btn-danger remove-row deleted-row" data-typeform="deleted" data-taction="institucion/registerform" data-field-id="{{$institucion->id_institucion}}"><i class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr>
 

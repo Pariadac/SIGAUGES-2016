@@ -171,8 +171,10 @@ Route::group(['middleware'=>['web','oper']],function(){
 
     Route::get('institucion','InstitucionController@index');
     Route::post('institucion/registerform','InstitucionController@renderform');
+    Route::post('institucion/buscar','InstitucionController@renderform');
     Route::post('institucion/crear','InstitucionController@crear');
     Route::post('institucion/modificar/{id}','InstitucionController@modificar');
+    Route::post('institucion/eliminar/{id}','InstitucionController@eliminar');
 
 
 Route::get('prueba', function(){return "hola";});

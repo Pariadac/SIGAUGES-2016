@@ -62,7 +62,7 @@ class InstitucionController extends Controller
     public function index()
     {
 
-        $instituciones=Institucion::orderBy('nombre_institucion', 'desc')->paginate(1);
+        $instituciones=Institucion::orderBy('nombre_institucion', 'desc')->paginate(20);
 
         return view('institucion.index',compact('instituciones'));
         
@@ -75,36 +75,63 @@ class InstitucionController extends Controller
             $action="institucion/crear";
         }elseif($request->typeform=='modify'){
             $action="institucion/modificar/".$request->field_id;
+        }elseif($request->typeform=='deleted'){
+            $action="institucion/eliminar/".$request->field_id;
         }
 
         $institucion = Institucion::find($request->field_id);
 
-        $fields=array(
+        if ($request->typeform=='deleted') {
+            $fields=false;
+        }else{
 
-            'field_id'=>array(
-                'type'  => 'hidden',
-                'value' => $request->field_id,
-                'id'    => 'field_id',
-            ),
-            'nombre_institucion' => array(
-                'type'  => 'text',
-                'value' => (empty($institucion))? '' : $institucion->nombre_institucion,
-                'id'    => 'nombre_institucion',
-                'label' => 'Nombre de la institucion'
-            ),
-            'direccion_institucion' => array(
-                'type'  => 'text',
-                'value' => (empty($institucion))? '' : $institucion->direccion_institucion,
-                'id'    => 'direccion_institucion',
-                'label' => 'Direccion de la institucion'
-            ),
-            'telefono_institucion' => array(
-                'type'  => 'text',
-                'value' => (empty($institucion))? '' : $institucion->telefono_institucion,
-                'id'    => 'telefono_institucion',
-                'label' => 'Telefono de la institucion'
-            )
-        );
+
+            $fields=array(
+
+                'field_id'=>array(
+                    'type'  => 'hidden',
+                    'value' => $request->field_id,
+                    'id'    => 'field_id',
+                ),
+                'nombre_institucion' => array(
+                    'type'  => 'text',
+                    'value' => (empty($institucion))? '' : $institucion->nombre_institucion,
+                    'id'    => 'nombre_institucion',
+                    'label' => 'Nombre de la institucion'
+                ),
+                'correo_institucional' => array(
+                    'type'  => 'text',
+                    'value' => (empty($institucion))? '' : $institucion->correo_institucional,
+                    'id'    => 'correo_institucional',
+                    'label' => 'Correo de la institucion'
+                ),
+                'direccion_institucion' => array(
+                    'type'  => 'text',
+                    'value' => (empty($institucion))? '' : $institucion->direccion_institucion,
+                    'id'    => 'direccion_institucion',
+                    'label' => 'Direccion de la institucion'
+                ),
+                'telefono_institucion' => array(
+                    'type'  => 'text',
+                    'value' => (empty($institucion))? '' : $institucion->telefono_institucion,
+                    'id'    => 'telefono_institucion',
+                    'label' => 'Telefono de la institucion'
+                ),
+                'status' => array(
+                    'type'      => 'select',
+                    'value'     => (empty($institucion))? '' : $institucion->status,
+                    'id'        => 'status',
+                    'label'     => 'Status',
+                    'options'   => array(
+                        'Seleccione...',
+                        'true'=>'Activo',
+                        'false'=>'Inactivo'
+                    )
+                )
+            );
+
+
+        }
 
         $htmlbody=View::make('layouts.regularform',compact('action','fields'))->render();
 
@@ -125,9 +152,26 @@ class InstitucionController extends Controller
     
     public function crear(Request $request){
 
-        //Validar Datos
+        $institucion=new Institucion($request->all());
 
-        $val=true;
+        $aux=$request->all();
+
+        $cont=0;
+
+        foreach ($aux as $key => $value) {
+            
+            $value=trim($value);
+
+            if ($value=='') {
+                $cont++;
+            }
+        }
+
+        if ($cont>0) {
+            $val=false;
+        }else{
+            $val=$institucion->save();
+        }
 
         $retorno=array();
 
@@ -150,9 +194,34 @@ class InstitucionController extends Controller
 
     public function modificar(Request $request, $id){
 
-        //Validar Datos
+        $institucion=Institucion::find($id);
 
-        $val=false;
+
+        $aux=$request->all();
+
+        $cont=0;
+
+        foreach ($aux as $key => $value) {
+            
+            $value=trim($value);
+
+            if ($value=='' && $key!='_token') {
+                $cont++;
+            }
+        }
+
+        if ($cont>0) {
+            $val=false;
+        }else{
+
+            $institucion->nombre_institucion=$request->nombre_institucion;
+            $institucion->direccion_institucion=$request->direccion_institucion;
+            $institucion->correo_institucional=$request->correo_institucional;
+            $institucion->telefono_institucion=$request->telefono_institucion;
+            $institucion->status=$request->status;
+
+            $val=$institucion->save();
+        }
 
         $retorno=array();
 
@@ -175,9 +244,9 @@ class InstitucionController extends Controller
 
     public function eliminar(Request $request, $id){
 
-        //Validar Datos
+        $institucion=Institucion::find($id);
 
-        $val=false;
+        $val=$institucion->delete();
 
         $retorno=array();
 
