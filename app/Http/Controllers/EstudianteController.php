@@ -24,15 +24,16 @@ namespace SISAUGES\Http\Controllers;
 use Illuminate\Http\Request;
 
 use SISAUGES\Actividad;
+use SISAUGES\Estudiante;
 use SISAUGES\Http\Requests;
 use SISAUGES\Http\Controllers\Controller;
-use SISAUGES\Tesista;
+use SISAUGES\Proyecto;
 
 use Illuminate\Support\Facades\View;
 /**
  * Class TesistaController
  *
- * Esta clase se diseño para manejar las transancciones del tesista en la base de
+ * Esta clase se diseño para manejar las transancciones del estudiantes en la base de
  * datos, estas pueden ser agregar,
  * modificar, eliminar o listar.
  *
@@ -40,29 +41,29 @@ use Illuminate\Support\Facades\View;
  * @copyright 2016 Ely Colmenarez
  * @package SISAUGES\Http\Controllers
  */
-class TesistaController extends Controller
+class EstudianteController extends Controller
 {
-    protected $actividad;
+    protected $proyecto;
     public function __construct()
     {
         $this->middleware('auth');
-        $this->actividad = Actividad::all()->pluck('nombre_actividad','id_actividad');
+        $this->proyecto = Proyecto::all()->pluck('nombre_proyecto','id_proyecto');
     }
     /**
      * Metodo diseñado para direccionar a la pantalla principal del modulo
      *
-     * Este metodo redirige a la pantalla principal del modulo tesista
+     * Este metodo redirige a la pantalla principal del modulo estudiantes
      * esta pantalla mostrara un listado de los tesistas agregados y un boton para modificar
      * y eliminar
      *
      * @param void
      *
-     * @return $tesista devuelve objeto de tipo tesista
+     * @return $tesista devuelve objeto de tipo estudiantes
      */
     public function index()
     {
-        $tesista=Tesista::with('actividad')->get();
-        return view('tesista.index')->with('tesista',$tesista);
+        $proyecto=Proyecto::with('proyecto')->get();
+        return view('proyecto.index')->with('proyecto',$proyecto);
     }
 
     public function renderform(Request $request){
@@ -156,22 +157,22 @@ class TesistaController extends Controller
     }
     
     /**
-     * Metodo diseñado para direccionar a la pantalla de agregar un tesista
+     * Metodo diseñado para direccionar a la pantalla de agregar un estudiantes
      *
-     * Este metodo redirige a la pantalla agregar tesista
+     * Este metodo redirige a la pantalla agregar estudiantes
      * la cual mostrara un formulario con los campos necesarios para almacenar
      * en la base de datos
      *
      * @param void
      *
-     * @return $tesista devuelve objeto de tipo tesista
+     * @return $tesista devuelve objeto de tipo estudiantes
      */
     public function create()
     {
-        return view('tesista.crear')->with(['actividad'=>$this->actividad]);
+        return view('estudiante.crear')->with(['proyecto'=>$this->proyecto]);
     }
     /**
-     * Metodo diseñado para almacenar el tesista en la base de datos
+     * Metodo diseñado para almacenar el estudiantes en la base de datos
      *
      * @param void
      *
@@ -179,68 +180,68 @@ class TesistaController extends Controller
      */
     public function store()
     {
-        $tesista=new Tesista();
-        $tesista->cedula=\Request::Input('cedula');
-        $tesista->nombre=\Request::Input('nombre');
-        $tesista->apellido=\Request::Input('apellido');
-        $tesista->email=\Request::Input('email');
-        $tesista->telefono=\Request::Input('telefono');
-        $tesista->carrera_tesista=\Request::Input('carrera');
-        $tesista->semestre_tesista=\Request::Input('semestre');
-        $tesista->actividad()->associate(\Request::Input('actividad'));
-        $tesista->save();
-        return redirect('tesista')->with('message','Se ha agregado el tesista con exito');
+        $estudiante=new Estudiante();
+        $estudiante->cedula=\Request::Input('cedula');
+        $estudiante->nombre=\Request::Input('nombre');
+        $estudiante->apellido=\Request::Input('apellido');
+        $estudiante->email=\Request::Input('email');
+        $estudiante->telefono=\Request::Input('telefono');
+        $estudiante->carrera_tesista=\Request::Input('carrera');
+        $estudiante->semestre_tesista=\Request::Input('semestre');
+        $estudiante->actividad()->associate(\Request::Input('actividad'));
+        $estudiante->save();
+        return redirect('estudiante')->with('message','Se ha agregado el Estudiante con exito');
 
 
     }
     /**
-     * Metodo diseñado para direccionar a la pantalla de editar un tesista
+     * Metodo diseñado para direccionar a la pantalla de editar un Estudiante
      *
-     * Este metodo redirige a la pantalla editar tesista
+     * Este metodo redirige a la pantalla editar Estudiante
      * la cual mostrara un formulario con los datos del representate seleccionado,
      * con los campos necesarios para almacenar en la base de datos
      *
-     * @param $id codigo de asociación del tesista en la base de datos
+     * @param $id codigo de asociación del Estudiante en la base de datos
      *
-     * @return $array un arreglo de objetos de los datos del tesista
+     * @return $array un arreglo de objetos de los datos del Estudiante
      */
     public function edit($id)
     {
-        $tesista = Tesista::find($id);
-        return view('tesista.editar')->with(['tesista'=>$tesista,'actividad'=>$this->actividad]);
+        $estudiante = Estudiante::find($id);
+        return view('estudiante.editar')->with(['estudiante'=>$estudiante,'actividad'=>$this->actividad]);
     }
     /**
-     * Metodo diseñado para actualizar los datos de un tesista en la base de datos
+     * Metodo diseñado para actualizar los datos de un Estudiante en la base de datos
      *
-     * @param $id codigo de asociación del tesista en la base de datos, $request datos enviados atravez del formulario
+     * @param $id codigo de asociación del Estudiante en la base de datos, $request datos enviados atravez del formulario
      *
      * @return $menssage retorna el resultado de la operación.
      */
     public function update($id)
     {
-        $tesista = Tesista::find($id);
-        $tesista->cedula=\Request::Input('cedula');
-        $tesista->nombre=\Request::Input('nombre');
-        $tesista->apellido=\Request::Input('apellido');
-        $tesista->email=\Request::Input('email');
-        $tesista->telefono=\Request::Input('telefono');
-        $tesista->carrera_tesista=\Request::Input('carrera');
-        $tesista->semestre_tesista=\Request::Input('semestre');
-        $tesista->id_actividad = \Request::Input('actividad');
-        $tesista->save();
-        return redirect('tesista')->with('message','El tesista N°'.$id.' ha sido editado');
+        $estudiante = Estudiante::find($id);
+        $estudiante->cedula=\Request::Input('cedula');
+        $estudiante->nombre=\Request::Input('nombre');
+        $estudiante->apellido=\Request::Input('apellido');
+        $estudiante->email=\Request::Input('email');
+        $estudiante->telefono=\Request::Input('telefono');
+        $estudiante->carrera_tesista=\Request::Input('carrera');
+        $estudiante->semestre_tesista=\Request::Input('semestre');
+        $estudiante->id_actividad = \Request::Input('actividad');
+        $estudiante->save();
+        return redirect('estudiante')->with('message','El Estudiante N°'.$id.' ha sido editado');
     }
     /**
-     * Metodo diseñado para eliminar los datos de un tesista en la base de datos
+     * Metodo diseñado para eliminar los datos de un Estudiante en la base de datos
      *
-     * @param $id codigo de asociación del tesista en la base de datos
+     * @param $id codigo de asociación del Estudiante en la base de datos
      *
      * @return $menssage retorna el resultado de la operación.
      */
     public function destroy($id)
     {
-        $tesista = Tesista::find($id);
-        $tesista->delete();
-        return redirect('tesista')->with('message','El Tesista '.$id.' ha sido eliminado con exito');
+        $estudiante = Estudiante::find($id);
+        $estudiante->delete();
+        return redirect('estudiante')->with('message','El Estudiante '.$id.' ha sido eliminado con exito');
     }
 }

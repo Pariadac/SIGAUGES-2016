@@ -8,6 +8,7 @@
         <title>SISAUGES-MEB</title>
         <meta name="keywords" content="HTML5 Admin Template" />
         <meta name="description" content="Porto Admin - Responsive HTML5 Template">
+        <meta name="csrf-token" content="{{csrf_token()}}">
         <meta name="author" content="okler.net">
         <link rel="shortcut icon" href="{{url('assets/ico/favicon.png')}}">
 
