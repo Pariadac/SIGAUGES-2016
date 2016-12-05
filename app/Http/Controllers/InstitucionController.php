@@ -62,11 +62,9 @@ class InstitucionController extends Controller
     public function index()
     {
 
-        $mensaje=false;
+        $instituciones=Institucion::orderBy('nombre_institucion', 'desc')->paginate(1);
 
-        $mostrar = DB::table('institucion')->get();
-
-        return view('institucion.principal',compact('mostrar','mensaje'));
+        return view('institucion.index',compact('instituciones'));
         
     }
 
@@ -74,74 +72,38 @@ class InstitucionController extends Controller
     public function renderform(Request $request){
 
         if ($request->typeform=='add') {
-            $action="test/crear";
+            $action="institucion/crear";
         }elseif($request->typeform=='modify'){
-            $action="test/modificar";
+            $action="institucion/modificar/".$request->field_id;
         }
+
+        $institucion = Institucion::find($request->field_id);
 
         $fields=array(
 
-            'nombre' => array(
+            'field_id'=>array(
+                'type'  => 'hidden',
+                'value' => $request->field_id,
+                'id'    => 'field_id',
+            ),
+            'nombre_institucion' => array(
                 'type'  => 'text',
-                'value' => '',
-                'id'    => 'nombre',
-                'label' => 'Campo'
+                'value' => (empty($institucion))? '' : $institucion->nombre_institucion,
+                'id'    => 'nombre_institucion',
+                'label' => 'Nombre de la institucion'
             ),
-            'apellido' => array(
+            'direccion_institucion' => array(
                 'type'  => 'text',
-                'value' => '',
-                'id'    => 'apellido',
-                'label' => 'Campo'
+                'value' => (empty($institucion))? '' : $institucion->direccion_institucion,
+                'id'    => 'direccion_institucion',
+                'label' => 'Direccion de la institucion'
             ),
-            'cedula' => array(
+            'telefono_institucion' => array(
                 'type'  => 'text',
-                'value' => '',
-                'id'    => 'cedula',
-                'label' => 'Campo'
-            ),
-            'telefono' => array(
-                'type'      => 'select',
-                'value'     => '',
-                'id'        => 'telefono',
-                'label'     => 'Campo',
-                'options'   => array(
-                    '212',
-                    '412',
-                    '414',
-                    '424',
-                    '416',
-                    '426'
-                )
-            ),
-            'rol' => array(
-                'type'      => 'select',
-                'value'     => '',
-                'id'        => 'telefono',
-                'label'     => 'Campo',
-                'options'   => array(
-                    'XXX',
-                    'YYY',
-                    'ZZZ',
-                )
-            ),
-            'email' => array(
-                'type'  => 'text',
-                'value' => '',
-                'id'    => 'email',
-                'label' => 'Campo'
-            ),
-            'username' => array(
-                'type'  => 'text',
-                'value' => '',
-                'id'    => 'username',
-                'label' => 'Campo'
-            ),
-            'password' => array(
-                'type'  => 'text',
-                'value' => '',
-                'id'    => 'password',
-                'label' => 'Campo'
-            ),
+                'value' => (empty($institucion))? '' : $institucion->telefono_institucion,
+                'id'    => 'telefono_institucion',
+                'label' => 'Telefono de la institucion'
+            )
         );
 
         $htmlbody=View::make('layouts.regularform',compact('action','fields'))->render();
@@ -161,176 +123,89 @@ class InstitucionController extends Controller
 
     }
     
-    /**
-     * Metodo diseñado para direccionar a la pantalla de agregar una institución
-     *
-     * Este metodo redirige a la pantalla agregar institución
-     * la cual mostrara un formulario con los campos necesarios para almacenar
-     * en la base de datos
-     *
-     * @param void
-     *
-     * @return $institución devuelve objeto de tipo institución
-     */
-    public function create()
-    {
-    
+    public function crear(Request $request){
 
-        return view('institucion.formulario');
+        //Validar Datos
 
-    }
-    /**
-     * Metodo diseñado para almacenar la institución en la base de datos
-     *
-     * @param void
-     *
-     * @return $menssage retorna el resultado de la operación
-     */
-    public function store(Request $request)
-    {
-       
-        $tb=DB::table('institucion')->max('id_institucion');
+        $val=false;
 
+        $retorno=array();
 
-        if ($tb) {
+        if ($val) {
+            //Datos Validos
+            $retorno['resultado']='success';
+            $retorno['mensaje']='El registro de los datos fue exitoso...';
 
-            $id=Institucion::find($tb);
-
-            if ($request->input('nomb_inst')==$id->nombre_institucion&& $id->direccion_institucion == $request->input('direccion_inst')&& $id->correo_institucional == $request->input('correo_inst')&&$id->telefono_institucion == $request->input('telefono_inst'))
-            {
-                
-
-            }else{
-
-
-                $inst=new Institucion();
-
-                $inst->nombre_institucion = $request->input('nomb_inst');
-                $inst->direccion_institucion = $request->input('direccion_inst');
-                $inst->correo_institucional = $request->input('correo_inst');
-                $inst->telefono_institucion = $request->input('telefono_inst');
-
-                $inst->save();
-
-
-            }
         }else{
-
-
-            $inst=new Institucion();
-
-            $inst->nombre_institucion = $request->input('nomb_inst');
-            $inst->direccion_institucion = $request->input('direccion_inst');
-            $inst->correo_institucional = $request->input('correo_inst');
-            $inst->telefono_institucion = $request->input('telefono_inst');
-
-            $inst->save();
+            //Datos Invalidos
+            $retorno['resultado']='danger';
+            $retorno['mensaje']='Los datos no suministrados no son validos';
 
         }
 
-
-        $retorno=0;
-
-
-        return view('institucion.formulario',compact('retorno'));
-        
-    }
-    /**
-     * Metodo diseñado para direccionar a la pantalla de editar una institución
-     *
-     * Este metodo redirige a la pantalla editar institución
-     * la cual mostrara un formulario con los datos del representate seleccionado,
-     * con los campos necesarios para almacenar en la base de datos
-     *
-     * @param $id codigo de asociación de la institución en la base de datos
-     *
-     * @return $array un arreglo de objetos de los datos de la institución
-     */
-    public function edit($id)
-    {
-        $institucion = Institucion::find($id);
-        return view('institucion.editar')->with('institucion',$institucion);
+        echo json_encode($retorno);
 
     }
-    /**
-     * Metodo diseñado para actualizar los datos de un institución en la base de datos
-     *
-     * @param $id codigo de asociación de la institución en la base de datos, $request datos enviados atravez del formulario
-     *
-     * @return $menssage retorna el resultado de la operación.
-     */
-    public function update($id)
-    {
-        $institucion = Institucion::find($id);
 
-        $institucion->nombre_institucion=\Request::Input('nomb_inst');
-        $institucion->direccion_institucion=\Request::Input('direccion_inst');
-        $institucion->correo_institucional=\Request::Input('correo_inst');
-        $institucion->telefono_institucion=\Request::Input('telefono_inst');
-        $institucion->save();
 
-        $mensaje='La actividad N°'.$id.' ha sido editado con exito';
+    public function modificar(Request $request, $id){
 
-        $mostrar = DB::table('institucion')->get();
+        //Validar Datos
 
-        return view('institucion.principal',compact('mostrar','mensaje'));
-    }
-    /**
-     * Metodo diseñado para eliminar los datos de un institución en la base de datos
-     *
-     * @param $id codigo de asociación del institución en la base de datos
-     *
-     * @return $menssage retorna el resultado de la operación.
-     */
-    public function destroy($id)
-    {
-       
-        $institucion = Institucion::find($id);
-        $validar=$institucion->delete();
-       
-       
-        if ($validar) {
-            $mensaje='La actividad N° '.$id.' ha sido eliminado con exito';
+        $val=false;
+
+        $retorno=array();
+
+        if ($val) {
+            //Datos Validos
+            $retorno['resultado']='success';
+            $retorno['mensaje']='El registro de los datos fue exitoso...';
+
         }else{
-            $mensaje="ocurrio un error";
+            //Datos Invalidos
+            $retorno['resultado']='danger';
+            $retorno['mensaje']='Los datos no suministrados no son validos';
+
         }
 
-
-        $mostrar = DB::table('institucion')->get();
-
-        return view('institucion.principal',compact('mostrar','mensaje'));
+        echo json_encode($retorno);
 
     }
 
 
-    public function buscar()
-    {
+    public function eliminar(Request $request, $id){
 
-        $data=Input::all();
+        //Validar Datos
 
-        $var= $data['busqueda'];
+        $val=false;
 
-        $mostrar= DB::table('institucion')->where('nombre_institucion','ILIKE','%'.$var.'%')->get();
-        
-        foreach ($mostrar as $key) {
+        $retorno=array();
 
-            echo '
+        if ($val) {
+            //Datos Validos
+            $retorno['resultado']='success';
+            $retorno['mensaje']='El registro de los datos fue exitoso...';
 
-            <tr class="borrables">
-                <td >'.$key->nombre_institucion.'</td> 
-                <td >'.$key->direccion_institucion.'</td> 
-                <td >'.$key->correo_institucional.'</td> 
-                <td >'.$key->telefono_institucion.'</td> 
-                <td >
-                    <a href="/institucion/editar/'.$key->id_institucion.'" name="singlebutton" class="glyphicon glyphicon-list btn btn-primary btn-xs">Modificar</a>
-                    <a href="/institucion/eliminar/'.$key->id_institucion.' name="singlebutton" class="glyphicon glyphicon-trash btn btn-danger btn-xs">Eliminar</a>
-                </td>  
-            </tr>
-
-            ';
-
+        }else{
+            //Datos Invalidos
+            $retorno['resultado']='danger';
+            $retorno['mensaje']='Los datos no suministrados no son validos';
 
         }
 
+        echo json_encode($retorno);
+
     }
+
+
+    public function buscar(Request $request){
+
+        $retorno=array('data'=>Institucion::orderBy('nombre_institucion', 'desc'));
+
+        echo json_encode($retorno);
+
+    }
+
+
+
 }

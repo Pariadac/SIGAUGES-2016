@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -24,8 +28,8 @@
 
 
 Route::group(['middleware'=>'web'], function(){
-    Route::get('/', function(){
-        return view('auth.login');
+    Route::get('/login', function(){
+        return redirect('login');
     });
 });
 
@@ -43,7 +47,7 @@ Route::group(['middleware' => ['web','su']], function () {
     Route::delete('tesista/eliminar/{id}','TesistaController@destroy');
 
 
-    //Rutas para usuarios
+//Rutas para usuarios
 
     Route::get('usuario','UserController@index');
     Route::get('crearUsuario','UserController@create');
@@ -84,12 +88,14 @@ Route::group(['middleware' => ['web','su']], function () {
 
 
     Route::get('institucion','InstitucionController@index');
-    Route::get('institucion/crear','InstitucionController@create');
+    Route::get('institucion/registerform','InstitucionController@renderform');
+    Route::post('institucion/registerform','InstitucionController@renderform');
     Route::post('institucion/guardar','InstitucionController@store');
     Route::get('institucion/editar/{id}','InstitucionController@edit');
     Route::post('institucion/edita/{id}','InstitucionController@update');
     Route::get('institucion/eliminar/{id}','InstitucionController@destroy');
     Route::post('institucion/buscar','InstitucionController@buscar');
+    Route::get('institucion/buscar','InstitucionController@buscar');
 
 
 //rutas para Departamento

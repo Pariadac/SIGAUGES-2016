@@ -55,6 +55,10 @@
 					                </div>
 					            </div>
 
+					        @elseif( $value['type']=='hidden' )
+
+					        	<input type="{!! $value['type'] !!}" class="form-control" id="{!! $value['id'] !!}" name="{!! $key !!}" value="{!! $value['value'] !!}">
+
 				        	@elseif( $value['type']=='select' )
 
 				        		@if(isset($value['extrafields']))

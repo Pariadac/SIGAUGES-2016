@@ -1,5 +1,5 @@
-
 jQuery(document).ready(function() {
+
 	
     /*Ajax regular form section request*/
 
@@ -10,6 +10,7 @@ jQuery(document).ready(function() {
         var form=$('#principalform');
 
         $('#principalform> input[name=typeform]').attr('value',$(this).data('typeform'));
+        $('#principalform> input[name=field_id]').attr('value',$(this).data('field-id'));
 
         var inform= form.serializeArray();
 

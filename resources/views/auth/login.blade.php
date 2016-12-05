@@ -40,7 +40,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
-                            <h1><strong>Bienvenidos</strong></h1>
+                            <h1><strong>Bienvenido</strong>!!!</h1>
                         </div>
                     </div>
                     <div class="row">
@@ -59,7 +59,7 @@
 
                                 {!! csrf_field() !!}
 
-                                @if(isset($errors) && $errors->any())
+                                @if(count($errors) > 0)
                                     <div class="alert alert-danger" id="myerrors">
                                         <strong>Uppss!</strong>Hay algunos problemas con los datos que ingresaste<br><br>
                                         <ul>
@@ -73,11 +73,11 @@
 
                                     <div class="form-group">
                                         <label class="sr-only" for="username">Usuario</label>
-                                        <input type="text" name="username" placeholder="Usuario..." class="username form-control @if(isset($errors) && $errors->any()) input-error @endif" id="username">
+                                        <input type="text" name="username" placeholder="Usuario..." class="username form-control @if(count($errors) > 0) input-error @endif" id="username">
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only" for="password">Contraseña</label>
-                                        <input type="password" name="password" placeholder="Contraseña..." class="password form-control @if(isset($errors) && $errors->any()) input-error @endif" id="password">
+                                        <input type="password" name="password" placeholder="Contraseña..." class="password form-control @if(count($errors) > 0) input-error @endif" id="password">
                                     </div>
                                     <button type="submit" class="btn">Iniciar Sesión!</button>
                                     
