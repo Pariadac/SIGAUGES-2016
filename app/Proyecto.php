@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Proyecto extends Model
 {
     public $timestamps = false;
-    protected $table = "Proyecto";
+    protected $table = "proyecto";
     protected $primaryKey = "id_proyecto";
     protected $fillable = ['nombre_proyecto','status_proyecto','permiso_proyecto','id_sector_pr'];
     protected $guarded = ['id_proyecto'];
@@ -24,11 +24,11 @@ class Proyecto extends Model
 
     public function muestras()
     {
-        return $this->belongsToMany(Muestra::class,'muestra_actividad','id_actividad','id_muestra');
+        return $this->belongsToMany(Muestra::class,'muestra_proyecto','id_proyecto','id_muestra');
     }
 
     public function sector()
     {
-        return $this->belongsTo(SectorActividad::class,'id_sector_ac');
+        return $this->belongsTo(SectorProyecto::class,'id_sector_pr','id_proyecto');
     }
 }

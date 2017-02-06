@@ -29,7 +29,7 @@ class OperadorMiddleware
         {
             if($this->auth->user()->id_rol != 1)
             {
-                return redirect('/');
+                return redirect('auth.login');
             }
         }
         return $next($request);

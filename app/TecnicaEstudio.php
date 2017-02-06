@@ -17,8 +17,8 @@ class TecnicaEstudio extends Model
     {
         return $this->belongsToMany(Muestra::class,
                                     'muestra_tecnica_estudio',
-                                    'id_muestra',
-                                    'id_tecnica_estudio');
+                                    'id_tecnica_estudio',
+                                    'id_muestra');
     }
 
 }

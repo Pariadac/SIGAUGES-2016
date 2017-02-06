@@ -31,6 +31,8 @@ use SISAUGES\Http\Controllers\Controller;
 use SISAUGES\Institucion;
 use SISAUGES\Representante;
 use SISAUGES\SectorActividad;
+
+use Illuminate\Support\Facades\View;
 /**
  * Class ActividadController
  *

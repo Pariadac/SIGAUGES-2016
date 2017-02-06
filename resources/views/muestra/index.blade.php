@@ -1,64 +1,249 @@
 @extends('layouts.app')
-
+@section('title', 'Proyectos')
 @section('content')
 
-                <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">
-                            Muestras <small>pagina principal</small>
-                        </h1>
-                        <ol class="breadcrumb">
-                            <li class="active">
-                                <i class="fa fa-dashboard"></i> Ubicacion:/ <label>Muestras/</label>
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <!-- /.row -->
+    
 
-                <?php if ($datos) {
-                    ?>
+    <section class="panel">
+        <header class="panel-heading">
+            <h2 class="panel-title">Rows with Details</h2>
+        </header>
+        <div class="panel-body">
 
-                    <div class="col-md-12" id="principal-suit">
-                        <h3>Ultima Muestra Tomada:<small><?php echo $datos[0]->codigo_muestra;?></small></h3>
-                        <div class="contenedores row">
-                            <div class="col-md-4">
-                                <img src="{{url('/storage')}}/{{$datos[0]->ruta_img_muestra}}">
-                            </div>
-                            <div class="col-md-8">
-                                <p>{{$datos[0]->descripcion_muestra}}</p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="form-group col-md-12">
+                <button id="" class="btn btn-default" >Agregar Muestras <i class="fa fa-plus"></i></button>
+            </div>
 
+            <div class="form-group col-md-12">
+                <table class="table table-bordered table-striped" id="datatable-details">
+                    <thead>
+                        <tr>
+                            <th>Muestra</th>
+                            <th>Codigo</th>
+                            <th>CampoX</th>
+                            <th>CampoX</th>
+                            <th>CampoX</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td><img class="muestralista" src="assets/backgrounds/4.jpg"></td>
+                            <td>X-001-98237420</td>
+                            <td>Win 95+</td>
+                            <td class="center">4</td>
+                            <td class="center">X</td>
+                            <td class="actions">
+                                <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="on-default edit-row"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        
 
-                <?php
-                }else{
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 
-                    ?>
+    <!-- Modals -->
 
-                        <div class="col-md-12" id="principal-suit">
-                            <h3>Ultima Muestra Tomada:<small>Ninguna</small></h3>
-                            <div class="contenedores row">
-                                <div class="col-md-4">
-                                    <img src="#">
-                                </div>
-                                <div class="col-md-8">
-                                    <p>Descripcion...</p>
-                                </div>
-                            </div>
-                        </div>
+    <div id="modalForm" class="modal-block modal-block-primary mfp-hide">
 
-                    <?php
-
-                }
-
-                ?>
-
-
-
-
+    </div>
 
 
 @endsection

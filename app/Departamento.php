@@ -16,6 +16,6 @@ class Departamento extends Model
 
     public function institucion()
     {
-        return $this->hasMany(Institucion::class,'id_institucion','id_departamento');
+        return $this->belongsTo(Institucion::class,'id_institucion','id_departamento');
     }
 }

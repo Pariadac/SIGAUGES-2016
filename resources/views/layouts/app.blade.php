@@ -1,345 +1,181 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html class="fixed sidebar-left-collapsed">
+    <head>
 
-<head>
+        <!-- Basic -->
+        <meta charset="UTF-8">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+        <title>SISAUGES-MEB</title>
+        <meta name="keywords" content="HTML5 Admin Template" />
+        <meta name="description" content="Porto Admin - Responsive HTML5 Template">
+        <meta name="author" content="okler.net">
+        <link rel="shortcut icon" href="{{url('assets/ico/favicon.png')}}">
 
-    <title>SISAUGES-MEB-@yield('title')</title>
+        <!-- Mobile Metas -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <!-- Bootstrap Core CSS -->
-    <link href="{{url('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+        <!-- Web Fonts  -->
+        
+        <!-- Vendor CSS -->
+        <link rel="stylesheet" href="{{url('assets/vendor/bootstrap/css/bootstrap.css')}}" />
+        <link rel="stylesheet" href="{{url('assets/vendor/font-awesome/css/font-awesome.css')}}" />
+        <link rel="stylesheet" href="{{url('assets/vendor/magnific-popup/magnific-popup.css')}}" />
+        <link rel="stylesheet" href="{{url('assets/vendor/bootstrap-datepicker/css/datepicker3.css')}}" />
 
-    <!-- Custom CSS -->
-    <link href="{{url('assets/css/sb-admin.css') }}" rel="stylesheet">
+        <!-- Specific Page Vendor CSS -->
+        <link rel="stylesheet" href="{{url('assets/vendor/select2/select2.css')}}" />
+        <link rel="stylesheet" href="{{url('assets/vendor/jquery-datatables-bs3/assets/css/datatables.css')}}" />
 
-    <!-- Morris Charts CSS -->
-    <link href="{{url('assets/css/dropzone.min.css') }}" rel="stylesheet">
+        <!-- Theme CSS -->
+        <link rel="stylesheet" href="{{url('assets/stylesheets/theme.css')}}" />
 
-    <link href="{{url('assets/css/plugins/morris.css') }}" rel="stylesheet">
-    <link href="{{url('assets/css/chosen.min.css') }}" rel="stylesheet">
+        <!-- Skin CSS -->
+        <link rel="stylesheet" href="{{url('assets/stylesheets/skins/default.css')}}" />
+        <link rel="stylesheet" href="{{url('assets/stylesheets/sisauges-meb-styles.css')}}" />
 
-    <!-- Custom Fonts -->
-    <link href="{{url('assets/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+        <!-- Theme Custom CSS -->
+        <link rel="stylesheet" href="{{url('assets/stylesheets/theme-custom.css')}}">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <![endif]-->
+        <!-- Head Libs -->
+        <script src="{{ url('assets/vendor/modernizr/modernizr.js')}}"></script>
 
+    </head>
+    <body>
+        <section class="body">
 
-    <!--Principal Style-->
-    <link href="{{url('assets/css/principal-style.css') }}" rel="stylesheet">
+            <!-- start: header -->
+            <header class="header">
 
-    <link href="{{url('assets/css/jquery.datetimepicker.css') }}" rel="stylesheet">
-    <script type = "text/javascript" >
-        function nobackbutton(){
-           window.location.hash="no-back-button";
-           window.location.hash="Again-No-back-button" //chrome
-           window.onhashchange=function(){window.location.hash="no-back-button";}
-          }
-    </script>
+                <div class="princpl-bnr"></div>
 
-</head>
+            </header>
+            <!-- end: header -->
 
-<body  onLoad="nobackbutton();" onpageshow="if (event.persisted) nobackbutton();" onUnload="">
-
-    @if (Auth::guest())<div id="wrapper"  >@else <div id="wrapper"> @endif
-
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Principal</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ url('/') }}">Muestrario</a>
-            </div>
-
-            <!-- Top Menu Items -->
-            <ul class="nav navbar-right top-nav">
-                <!--<li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu message-dropdown">
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>Usuario</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-footer">
-                            <a href="#">Read All New Messages</a>
-                        </li>
-                    </ul>
-                </li>
+            <div class="inner-wrapper">
+                <!-- start: sidebar -->
                 
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu alert-dropdown">
-                        <li>
-                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">View All</a>
-                        </li>
-                    </ul>
-                </li>-->
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> @if (Auth::guest()) Usuario @else {{Auth::user()->username }} @endif<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
+                    @include('layouts.sidebar')
 
+                <!-- end: sidebar -->
 
-                        @if (Auth::guest())
-
-                            <li>
-                                <a href="{{ url('/login') }}">Iniciar Sesion</a>
-                            </li>
-                            
-                        @else
-
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-user"></i> Perfil</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="{{ url('/logout') }}"><i class="fa fa-fw fa-power-off"></i>Cerrar Sesion</a>
-                            </li>
-
-                        @endif
-
-                    </ul>
-                </li>
-            </ul>
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-
-                @if (Auth::guest())<ul class="nav navbar-nav side-nav" id="eltraslado">@else <ul class="nav navbar-nav side-nav" id="eltraslado"> @endif
-                    <li class="active">
-                        <a href="#" id="ocultar_escr"><i class="fa fa-chevron-left"></i> Ocultar</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#field-1"><i class="fa fa-fw fa-cubes"></i> Muestras<span><i class="fa fa-fw fa-caret-down"></i></span></a>
-                        <ul id="field-1" class="collapse">
-                            <li>
-                                <a href="{{url('/muestras/crear')}}">AGREGAR</a>
-                            </li>
-                            <li>
-                                <a href="{{url('/muestras/lista')}}">LISTAR</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#field-2"><i class="fa fa-fw fa-folder-open"></i> Actividad<span><i class="fa fa-fw fa-caret-down"></i></span></a>
-
-                        <ul id="field-2" class="collapse">
-                            
-                            <li>
-                                <a href="{{url('/crearActividad')}}">AGREGAR</a>
-                            </li>
-                            <li>
-                                <a href="{{url('/actividad')}}">LISTAR</a>
-                            </li>
-
-
-                        </ul>
-
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#field-3"><i class="fa fa-fw fa-suitcase"></i> Instituciones<span><i class="fa fa-fw fa-caret-down"></i></span></a>
-                        
-                        <ul id="field-3" class="collapse">
-                            <li>
-                                <a href="{{url('/institucion/crear')}}">AGREGAR</a>
-                            </li>
-                            <li>
-                                <a href="{{url('/institucion')}}">LISTAR</a>
-                            </li>
-                        </ul>
-
-                    </li>
-
-
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#field-dep"><i class="fa fa-fw fa-folder-open"></i> Departamentos<span><i class="fa fa-fw fa-caret-down"></i></span></a>
-
-                        <ul id="field-dep" class="collapse">
-                            
-                            <li>
-                                <a href="{{url('/departamento/crear')}}">AGREGAR</a>
-                            </li>
-                            <li>
-                                <a href="{{url('/departamento')}}">LISTAR</a>
-                            </li>
-
-                            
-                        </ul>
-
-                    </li>
-
-                        
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#field-4"><i class="fa fa-fw fa-users"></i>Tesistas<span><i class="fa fa-fw fa-caret-down"></i></span></a>
-    
-                        <ul id="field-4" class="collapse">
-                            <li>
-                                <a href="{{url('/crearTesista')}}">AGREGAR</a>
-                            </li>
-                            <li>
-                                <a href="{{url('/tesista')}}">LISTAR</a>
-                            </li>
-                        </ul>
-
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#field-5"><i class="fa fa-fw  fa-coffee"></i>Representantes<span><i class="fa fa-fw fa-caret-down"></i></span></a>
-                        <ul id="field-5" class="collapse">
-                            <li>
-                                <a href="{{url('/crearRepresentante')}}">AGREGAR</a>
-                            </li>
-                            <li>
-                                <a href="{{url('/representante')}}">LISTAR</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#field-6"><i class="fa fa-fw fa-user"></i> Usuarios<span><i class="fa fa-fw fa-caret-down"></i></span></a>
-                        
-                        <ul id="field-6" class="collapse">
-                            <li>
-                                <a href="{{url('/crearUsuario')}}">AGREGAR</a>
-                            </li>
-                            <li>
-                                <a href="{{url('/usuario')}}">LISTAR</a>
-                            </li>
-                        </ul>
-
-                    </li>
-                    <!--<li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <span><i class="fa fa-fw fa-caret-down"></i></span></a>
-                        <ul id="demo" class="collapse">
-                            <li>
-                                <a href="#">Dropdown Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Dropdown Item</a>
-                            </li>
-                        </ul>
-                    </li>-->
-                    </ul>
-
-
-                <div class="paralela" id="eltraslado2"></div>
-
-</ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </nav>
-
-
-            <div id="page-wrapper">
-
-                <div class="container-fluid">
-
-                    <div class="col-md-12">
+                <section role="main" class="content-body">
+                    <header class="page-header">
+                        <h2>Principal</h2>
                     
-                        <div class="cabezera">
+                        <div class="right-wrapper pull-right">
+                            <ol class="breadcrumbs">
+                                <li>
+                                    <a href="{{url('index.html')}}">
+                                        <i class="fa fa-home"></i>
+                                    </a>
+                                </li>
+                            </ol>
+                    
+                            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+                        </div>
+                    </header>
 
-                            <img src="{{ url('/') }}/assets/complementos/BANNER1.png">
-                            
+                    <!-- start: page -->
+
+                        @yield('content')
+
+                    <!-- end: page -->
+                </section>
+            </div>
+
+            <aside id="sidebar-right" class="sidebar-right">
+                <div class="nano">
+                    <div class="nano-content">
+                        <a href="#" class="mobile-close visible-xs">
+                            Collapse <i class="fa fa-chevron-right"></i>
+                        </a>
+            
+                        <div class="sidebar-right-wrapper">
+            
+                            <div class="sidebar-widget widget-calendar">
+                                <h6>Upcoming Tasks</h6>
+                                <div data-plugin-datepicker data-plugin-skin="dark" ></div>
+            
+                                <ul>
+                                    <li>
+                                        <time datetime="2014-04-19T00:00+00:00">04/19/2014</time>
+                                        <span>Company Meeting</span>
+                                    </li>
+                                </ul>
+                            </div>
+            
                         </div>
                     </div>
-
-
-                    @yield('content')
-
-
                 </div>
+            </aside>
 
-            </div>
+            <!-- Vendor -->
+            <script src="{{ url('assets/vendor/jquery/jquery.js')}}"></script>
+            <script src="{{ url('assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js')}}"></script>
+            <script src="{{ url('assets/vendor/bootstrap/js/bootstrap.js')}}"></script>
+            <script src="{{ url('assets/vendor/nanoscroller/nanoscroller.js')}}"></script>
+            <script src="{{ url('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+            <script src="{{ url('assets/vendor/magnific-popup/magnific-popup.js')}}"></script>
+            <script src="{{ url('assets/vendor/jquery-placeholder/jquery.placeholder.js')}}"></script>
+            
+            <!-- Specific Page Vendor -->
 
-        <!-- JavaScripts -->
-        </div>
-        <!-- /#wrapper -->
+            <script src="{{ url('assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js')}}"></script>
+            <script src="{{ url('assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js')}}"></script>
+            <script src="{{ url('assets/vendor/jquery-appear/jquery.appear.js')}}"></script>
+            <script src="{{ url('assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js')}}"></script>
+            <script src="{{ url('assets/vendor/jquery-easypiechart/jquery.easypiechart.js')}}"></script>
+            <script src="{{ url('assets/vendor/flot/jquery.flot.js')}}"></script>
+            <script src="{{ url('assets/vendor/flot-tooltip/jquery.flot.tooltip.js')}}"></script>
+            <script src="{{ url('assets/vendor/flot/jquery.flot.pie.js')}}"></script>
+            <script src="{{ url('assets/vendor/flot/jquery.flot.categories.js')}}"></script>
+            <script src="{{ url('assets/vendor/flot/jquery.flot.resize.js')}}"></script>
+            <script src="{{ url('assets/vendor/jquery-sparkline/jquery.sparkline.js')}}"></script>
+            <script src="{{ url('assets/vendor/raphael/raphael.js')}}"></script>
+            <script src="{{ url('assets/vendor/morris/morris.js')}}"></script>
+            <script src="{{ url('assets/vendor/gauge/gauge.js')}}"></script>
+            <script src="{{ url('assets/vendor/snap-svg/snap.svg.js')}}"></script>
+            <script src="{{ url('assets/vendor/liquid-meter/liquid.meter.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/jquery.vmap.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/data/jquery.vmap.sampledata.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/maps/jquery.vmap.world.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/maps/continents/jquery.vmap.africa.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/maps/continents/jquery.vmap.asia.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/maps/continents/jquery.vmap.australia.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/maps/continents/jquery.vmap.europe.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/maps/continents/jquery.vmap.south-america.js')}}"></script>
+            <script src="{{url('assets/vendor/pnotify/pnotify.custom.js' )}}"></script>
+            <script src="{{url('assets/vendor/jquery-datatables/media/js/jquery.dataTables.js' )}}"></script>
+            <script src="{{url('assets/vendor/jquery-datatables-bs3/assets/js/datatables.js' )}}"></script>
+            <script src="{{url('assets/vendor/select2/select2.js' )}}"></script>
+            <script src="{{url('assets/vendor/jquery-datatables/media/js/jquery.dataTables.js' )}}"></script>
+            <script src="{{url('assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js' )}}"></script>
+            <script src="{{url('assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js' )}}"></script>
+            <script src="{{url('assets/vendor/jquery-maskedinput/jquery.maskedinput.js' )}}"></script>
+            <script type="text/javascript" src="{{url('assets/js/main_sisauges_meb.js' )}}"></script>
 
-        <!-- jQuery -->
-        <script src="{{url('assets/js/jquery.js') }}"></script>
-        
-		<script src="{{url('assets/js/scripts.js') }}"></script>
-        <!-- Bootstrap Core JavaScript -->
-        <script src="{{url('assets/js/bootstrap.min.js') }}"></script>
+            
+            <!-- Theme Base, Components and Settings -->
+            <script src="{{ url('assets/javascripts/theme.js')}}"></script>
+            
+            <!-- Theme Custom -->
+            <script src="{{ url('assets/javascripts/theme.custom.js')}}"></script>
+            
+            <!-- Theme Initialization Files -->
+            <script src="{{ url('assets/javascripts/theme.init.js')}}"></script>
 
-        <!-- Morris Charts JavaScript -->
-        <script src="{{url('assets/js/plugins/morris/raphael.min.js') }}"></script>
-        <script src="{{url('assets/js/plugins/morris/morris.min.js') }}"></script>
-        <script src="{{url('assets/js/plugins/morris/morris-data.js') }}"></script>
-        <script src="{{url('assets/js/chosen.jquery.min.js') }}"></script>
-        <script src="{{url('assets/js/dropzone.min.js') }}"></script>
-        <script src="{{url('assets/js/jquery.datetimepicker.full.js') }}"></script>
-        
-        @stack('scripts')
-    </div>
-</body>
+            <!-- Examples -->
+            <script src="{{url('assets/javascripts/tables/examples.datatables.ajax.js' )}}"></script>
+            <script src="{{ url('assets/javascripts/dashboard/examples.dashboard.js')}}"></script>
+            <script src="{{url('assets/javascripts/ui-elements/examples.modals.js' )}}"></script>
+            <script src="{{url('assets/javascripts/tables/examples.datatables.editable.js' )}}"></script>
+            <script src="{{url('assets/javascripts/ui-elements/examples.modals.js' )}}"></script>
+            <script src="{{url('assets/javascripts/tables/examples.datatables.default.js' )}}"></script>
+            <script src="{{url('assets/javascripts/tables/examples.datatables.row.with.details.js' )}}"></script>
+            <script src="{{url('assets/javascripts/tables/examples.datatables.tabletools.js' )}}"></script>
+            @stack('scripts')
 
+        </section>
+    </body>
+</html>

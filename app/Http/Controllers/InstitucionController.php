@@ -29,6 +29,8 @@ use SISAUGES\Http\Requests;
 use SISAUGES\Http\Controllers\Controller;
 use SISAUGES\Institucion;
 use SISAUGES\Representante;
+
+use Illuminate\Support\Facades\View;
 /**
  * Class UserController
  *
@@ -57,186 +59,280 @@ class InstitucionController extends Controller
      *
      * @return $institución devuelve objeto de tipo institución
      */
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
 
-        $mensaje=false;
+        $instituciones=Institucion::orderBy('nombre_institucion', 'desc')->paginate(20);
 
-        $mostrar = DB::table('institucion')->get();
-
-        return view('institucion.principal',compact('mostrar','mensaje'));
+        return view('institucion.index',compact('instituciones'));
         
     }
-    /**
-     * Metodo diseñado para direccionar a la pantalla de agregar una institución
-     *
-     * Este metodo redirige a la pantalla agregar institución
-     * la cual mostrara un formulario con los campos necesarios para almacenar
-     * en la base de datos
-     *
-     * @param void
-     *
-     * @return $institución devuelve objeto de tipo institución
-     */
-    public function create()
-    {
-    
 
-        return view('institucion.formulario');
+    public function renderForm(Request $request){
+
+        if ($request->typeform=='add') {
+            $action="institucion/crear";
+        }elseif($request->typeform=='modify'){
+            $action="institucion/modificar/".$request->field_id;
+        }elseif($request->typeform=='deleted'){
+            $action="institucion/eliminar/".$request->field_id;
+        }
+
+        $institucion = Institucion::find($request->field_id);
+
+        if ($request->typeform=='deleted') {
+            $fields=false;
+        }else{
+
+
+            $fields=array(
+
+                'field_id'=>array(
+                    'type'  => 'hidden',
+                    'value' => $request->field_id,
+                    'id'    => 'field_id',
+                ),
+                'nombre_institucion' => array(
+                    'type'  => 'text',
+                    'value' => (empty($institucion))? '' : $institucion->nombre_institucion,
+                    'id'    => 'nombre_institucion',
+                    'label' => 'Nombre de la institucion'
+                ),
+                'correo_institucional' => array(
+                    'type'  => 'text',
+                    'value' => (empty($institucion))? '' : $institucion->correo_institucional,
+                    'id'    => 'correo_institucional',
+                    'label' => 'Correo de la institucion'
+                ),
+                'direccion_institucion' => array(
+                    'type'  => 'text',
+                    'value' => (empty($institucion))? '' : $institucion->direccion_institucion,
+                    'id'    => 'direccion_institucion',
+                    'label' => 'Direccion de la institucion'
+                ),
+                'telefono_institucion' => array(
+                    'type'  => 'text',
+                    'value' => (empty($institucion))? '' : $institucion->telefono_institucion,
+                    'id'    => 'telefono_institucion',
+                    'label' => 'Telefono de la institucion'
+                ),
+                'status' => array(
+                    'type'      => 'select',
+                    'value'     => (empty($institucion))? '' : $institucion->status,
+                    'id'        => 'status',
+                    'validaciones'=>array(
+
+                        'obligatorio'
+
+                    ),
+                    'label'     => 'Status',
+                    'options'   => array(
+                        ''=>'Seleccione...',
+                        'true'=>'Activo',
+                        'false'=>'Inactivo'
+                    )
+                )
+            );
+
+
+        }
+
+        $htmlbody=View::make('layouts.regularform',compact('action','fields'))->render();
+
+        if ($htmlbody) {
+            $retorno=array(
+                'result'=>true,
+                'html'  =>$htmlbody
+            );
+        }else{
+            $retorno=array(
+                'result'=>false,
+            );
+        }
+
+        echo json_encode($retorno);
 
     }
+
     /**
-     * Metodo diseñado para almacenar la institución en la base de datos
+     * Store a newly created resource in storage.
      *
-     * @param void
-     *
-     * @return $menssage retorna el resultado de la operación
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-       
-        $tb=DB::table('institucion')->max('id_institucion');
 
+    public function store($request){
 
-        if ($tb) {
+        $institucion=new Institucion($request->all());
 
-            $id=Institucion::find($tb);
+        $aux=$request->all();
 
-            if ($request->input('nomb_inst')==$id->nombre_institucion&& $id->direccion_institucion == $request->input('direccion_inst')&& $id->correo_institucional == $request->input('correo_inst')&&$id->telefono_institucion == $request->input('telefono_inst'))
-            {
-                
+        $cont=0;
 
-            }else{
+        foreach ($aux as $key => $value) {
+            
+            $value=trim($value);
 
-
-                $inst=new Institucion();
-
-                $inst->nombre_institucion = $request->input('nomb_inst');
-                $inst->direccion_institucion = $request->input('direccion_inst');
-                $inst->correo_institucional = $request->input('correo_inst');
-                $inst->telefono_institucion = $request->input('telefono_inst');
-
-                $inst->save();
-
-
+            if ($value=='' &&  $key!='_token') {
+                $cont++;
             }
+        }
+
+        if ($cont!=0) {
+            $val=false;
+        }else{
+            $val=$institucion->save();
+        }
+
+        return $val;
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function update($request, $id){
+
+        $institucion=Institucion::find($id);
+
+
+        $aux=$request->all();
+
+        $cont=0;
+
+        foreach ($aux as $key => $value) {
+            
+            $value=trim($value);
+
+            if ($value=='' && $key!='_token') {
+                $cont++;
+            }
+        }
+
+        if ($cont>0) {
+            $val=false;
         }else{
 
+            $institucion->nombre_institucion=$request->nombre_institucion;
+            $institucion->direccion_institucion=$request->direccion_institucion;
+            $institucion->correo_institucional=$request->correo_institucional;
+            $institucion->telefono_institucion=$request->telefono_institucion;
+            $institucion->status=$request->status;
 
-            $inst=new Institucion();
-
-            $inst->nombre_institucion = $request->input('nomb_inst');
-            $inst->direccion_institucion = $request->input('direccion_inst');
-            $inst->correo_institucional = $request->input('correo_inst');
-            $inst->telefono_institucion = $request->input('telefono_inst');
-
-            $inst->save();
-
+            $val=$institucion->save();
         }
 
+        return $val;
 
-        $retorno=0;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function destroy($request, $id){
+
+        $institucion=Institucion::find($id);
+
+        $val=$institucion->delete();
+
+        return $val;
+
+    }
 
 
-        return view('institucion.formulario',compact('retorno'));
+
+    public function search(Request $request){
+
         
-    }
-    /**
-     * Metodo diseñado para direccionar a la pantalla de editar una institución
-     *
-     * Este metodo redirige a la pantalla editar institución
-     * la cual mostrara un formulario con los datos del representate seleccionado,
-     * con los campos necesarios para almacenar en la base de datos
-     *
-     * @param $id codigo de asociación de la institución en la base de datos
-     *
-     * @return $array un arreglo de objetos de los datos de la institución
-     */
-    public function edit($id)
-    {
-        $institucion = Institucion::find($id);
-        return view('institucion.editar')->with('institucion',$institucion);
 
     }
-    /**
-     * Metodo diseñado para actualizar los datos de un institución en la base de datos
-     *
-     * @param $id codigo de asociación de la institución en la base de datos, $request datos enviados atravez del formulario
-     *
-     * @return $menssage retorna el resultado de la operación.
-     */
-    public function update($id)
-    {
-        $institucion = Institucion::find($id);
 
-        $institucion->nombre_institucion=\Request::Input('nomb_inst');
-        $institucion->direccion_institucion=\Request::Input('direccion_inst');
-        $institucion->correo_institucional=\Request::Input('correo_inst');
-        $institucion->telefono_institucion=\Request::Input('telefono_inst');
-        $institucion->save();
 
-        $mensaje='La actividad N°'.$id.' ha sido editado con exito';
+    public function ajaxRegularStore(Request $request){
 
-        $mostrar = DB::table('institucion')->get();
+        $val=$this->store($request);
 
-        return view('institucion.principal',compact('mostrar','mensaje'));
-    }
-    /**
-     * Metodo diseñado para eliminar los datos de un institución en la base de datos
-     *
-     * @param $id codigo de asociación del institución en la base de datos
-     *
-     * @return $menssage retorna el resultado de la operación.
-     */
-    public function destroy($id)
-    {
-       
-        $institucion = Institucion::find($id);
-        $validar=$institucion->delete();
-       
-       
-        if ($validar) {
-            $mensaje='La actividad N° '.$id.' ha sido eliminado con exito';
+        $retorno=array();
+
+        if ($val) {
+            //Datos Validos
+            $retorno['resultado']='success';
+            $retorno['mensaje']='El registro de los datos fue exitoso...';
+
         }else{
-            $mensaje="ocurrio un error";
+            //Datos Invalidos
+            $retorno['resultado']='danger';
+            $retorno['mensaje']='Los datos no suministrados no son validos';
+
         }
 
+        echo json_encode($retorno);
 
-        $mostrar = DB::table('institucion')->get();
+    }
 
-        return view('institucion.principal',compact('mostrar','mensaje'));
+    public function ajaxRegularUpdate(Request $request, $id){
+
+        $val=$this->update($request,$id);
+
+        $retorno=array();
+
+        if ($val) {
+            //Datos Validos
+            $retorno['resultado']='success';
+            $retorno['mensaje']='El registro de los datos fue exitoso...';
+
+        }else{
+            //Datos Invalidos
+            $retorno['resultado']='danger';
+            $retorno['mensaje']='Los datos no suministrados no son validos';
+
+        }
+
+        echo json_encode($retorno);
+
+    }
+
+    public function ajaxRegularDestroy(Request $request,$id){
+
+        $val=$this->destroy($request,$id);
+
+        $retorno=array();
+
+        if ($val) {
+            //Datos Validos
+            $retorno['resultado']='success';
+            $retorno['mensaje']='El registro de los datos fue exitoso...';
+
+        }else{
+            //Datos Invalidos
+            $retorno['resultado']='danger';
+            $retorno['mensaje']='Los datos no suministrados no son validos.';
+
+        }
+
+        echo json_encode($retorno);
+
+    }
+
+    public function ajaxRegularSearch(Request $request){
+
 
     }
 
 
-    public function buscar()
-    {
 
-        $data=Input::all();
-
-        $var= $data['busqueda'];
-
-        $mostrar= DB::table('institucion')->where('nombre_institucion','ILIKE','%'.$var.'%')->get();
-        
-        foreach ($mostrar as $key) {
-
-            echo '
-
-            <tr class="borrables">
-                <td >'.$key->nombre_institucion.'</td> 
-                <td >'.$key->direccion_institucion.'</td> 
-                <td >'.$key->correo_institucional.'</td> 
-                <td >'.$key->telefono_institucion.'</td> 
-                <td >
-                    <a href="/institucion/editar/'.$key->id_institucion.'" name="singlebutton" class="glyphicon glyphicon-list btn btn-primary btn-xs">Modificar</a>
-                    <a href="/institucion/eliminar/'.$key->id_institucion.' name="singlebutton" class="glyphicon glyphicon-trash btn btn-danger btn-xs">Eliminar</a>
-                </td>  
-            </tr>
-
-            ';
-
-
-        }
-
-    }
 }

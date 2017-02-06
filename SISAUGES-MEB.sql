@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS PERSONA
 	apellido varchar(30),
 	email varchar(30) not null,
 	telefono varchar(11),
+	tipo_persona integer,
 	status boolean,
 	constraint pk_persona 
 		primary key (id_persona),
@@ -27,24 +28,24 @@ CREATE TABLE IF NOT EXISTS PERSONA
 
 --drop table persona;
 
-DO $$
-BEGIN
-	IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'STATUS') THEN
-		CREATE TYPE STATUS AS ENUM
-		(
-			'No iniciado',
-			'En progreso',
-			'Culminado'
-		);
-	END IF;
-	IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'PERMISOS') THEN
-		CREATE TYPE PERMISOS AS ENUM
-		(		
-			'Publico',
-			'Privado'
-		);
-	END IF;
-END$$;
+
+CREATE TYPE STATUS AS ENUM
+(
+	'No iniciado',
+	'En progreso',
+	'Culminado'
+);
+
+--DROP TYPE STATUS;
+
+CREATE TYPE PERMISOS AS ENUM
+(		
+	'Publico',
+	'Privado'
+);
+
+--DROP TYPE PERMISOS;
+
 
 CREATE TABLE IF NOT EXISTS SECTOR_PROYECTO
 (
@@ -173,7 +174,7 @@ CREATE TABLE IF NOT EXISTS ROL_USUARIO
 (
 	id_rol serial,
 	descripcion_rol varchar(30),
-    status boolean,
+    	status boolean,
 	constraint pk_rol_de_usuario 
 		primary key (id_rol)
 );

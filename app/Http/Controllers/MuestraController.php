@@ -36,6 +36,7 @@ use Imagick;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\View;
 use SISAUGES\Http\Controllers\Controller;
 use SISAUGES\Muestra;
 use SISAUGES\Actividad;
@@ -76,6 +77,97 @@ class MuestraController extends Controller
      *
      * @return $aux retorna la actividades relacionadas a una muestra
      */
+
+
+    public function renderform(Request $request){
+
+        if ($request->typeform=='add') {
+            $action="test/crear";
+        }elseif($request->typeform=='modify'){
+            $action="test/modificar";
+        }
+
+        $fields=array(
+
+            'nombre' => array(
+                'type'  => 'text',
+                'value' => '',
+                'id'    => 'nombre',
+                'label' => 'Campo'
+            ),
+            'apellido' => array(
+                'type'  => 'text',
+                'value' => '',
+                'id'    => 'apellido',
+                'label' => 'Campo'
+            ),
+            'cedula' => array(
+                'type'  => 'text',
+                'value' => '',
+                'id'    => 'cedula',
+                'label' => 'Campo'
+            ),
+            'telefono' => array(
+                'type'      => 'select',
+                'value'     => '',
+                'id'        => 'telefono',
+                'label'     => 'Campo',
+                'options'   => array(
+                    '212',
+                    '412',
+                    '414',
+                    '424',
+                    '416',
+                    '426'
+                )
+            ),
+            'rol' => array(
+                'type'      => 'select',
+                'value'     => '',
+                'id'        => 'telefono',
+                'label'     => 'Campo',
+                'options'   => array(
+                    'XXX',
+                    'YYY',
+                    'ZZZ',
+                )
+            ),
+            'email' => array(
+                'type'  => 'text',
+                'value' => '',
+                'id'    => 'email',
+                'label' => 'Campo'
+            ),
+            'username' => array(
+                'type'  => 'text',
+                'value' => '',
+                'id'    => 'username',
+                'label' => 'Campo'
+            ),
+            'password' => array(
+                'type'  => 'text',
+                'value' => '',
+                'id'    => 'password',
+                'label' => 'Campo'
+            ),
+        );
+
+        $htmlbody=View::make('layouts.regularform',compact('action','fields'))->render();
+
+        if ($htmlbody) {
+            $retorno=array(
+                'result'=>true,
+                'html'  =>$htmlbody
+            );
+        }else{
+            $retorno=array(
+                'result'=>false,
+            );
+        }
+
+        echo json_encode($retorno);
+
+    }
 
 
     public function obtener_actividad($valor){
